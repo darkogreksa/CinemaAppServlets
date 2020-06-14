@@ -29,6 +29,21 @@ public class Film {
 		this.opis = opis;
 	}
 
+	
+
+	public Film(int id, String naziv, String zanrovi, int trajanje, String distributer, String zemljaPorekla,
+			int godinaProizvodnje) {
+		super();
+		this.id = id;
+		this.naziv = naziv;
+		this.zanrovi = zanrovi;
+		this.trajanje = trajanje;
+		this.distributer = distributer;
+		this.zemljaPorekla = zemljaPorekla;
+		this.godinaProizvodnje = godinaProizvodnje;
+	}
+
+
 
 	public int getId() {
 		return id;

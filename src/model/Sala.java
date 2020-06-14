@@ -13,6 +13,12 @@ public class Sala {
 		this.tipProjekcije = tipProjekcije;
 	}
 	
+	public Sala(int id, String naziv) {
+		super();
+		this.id = id;
+		this.naziv = naziv;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;;
+
 public class Korisnik {
 	
 	public enum Role {
@@ -9,16 +11,41 @@ public class Korisnik {
 	
 	private String username;
 	private String password;
-	private String datumRegistracije;
+	private Date datumRegistracije;
 	private Role role;
 	
 	
-	public Korisnik(String username, String password, String datumRegistracije, Role role) {
-		super();
+	public Korisnik(String username, String password, Date datumRegistracije, Role role) {
 		this.username = username;
 		this.password = password;
 		this.datumRegistracije = datumRegistracije;
 		this.role = role;
+	}
+	
+	public Korisnik(String username) {
+		this.username = username;
+	}
+	
+	public Korisnik(String username, String password, Role role) {
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		return prime + username.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+
+		Korisnik other = (Korisnik) obj;
+		return username.equals(other.username);
 	}
 
 
@@ -42,12 +69,12 @@ public class Korisnik {
 	}
 
 
-	public String getDatumRegistracije() {
+	public Date getDatumRegistracije() {
 		return datumRegistracije;
 	}
 
 
-	public void setDatumRegistracije(String datumRegistracije) {
+	public void setDatumRegistracije(Date datumRegistracije) {
 		this.datumRegistracije = datumRegistracije;
 	}
 
@@ -60,14 +87,4 @@ public class Korisnik {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-
-
-	@Override
-	public String toString() {
-		return "Korisnik [username=" + username + ", password=" + password + ", datumRegistracije=" + datumRegistracije
-				+ ", role=" + role + "]";
-	}
-	
-	
-
 }

@@ -8,11 +8,10 @@ public class Projekcija {
 	private Sala sala;
 	private String vremePrikazivanja;
 	private double cena;
-	private String administrator;
-	
+	private Korisnik administrator;
 	
 	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, String vremePrikazivanja, double cena,
-			String administrator) {
+			Korisnik administrator) {
 		super();
 		this.id = id;
 		this.film = film;
@@ -21,6 +20,12 @@ public class Projekcija {
 		this.vremePrikazivanja = vremePrikazivanja;
 		this.cena = cena;
 		this.administrator = administrator;
+	}
+
+
+	public Projekcija(int id2, int film2, int tipProjekcije2, int sala2, String vrPrikazivanja, double cena2,
+			String administrator2) {
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -84,12 +89,12 @@ public class Projekcija {
 	}
 
 
-	public String getAdministrator() {
+	public Korisnik getAdministrator() {
 		return administrator;
 	}
 
 
-	public void setAdministrator(String administrator) {
+	public void setAdministrator(Korisnik administrator) {
 		this.administrator = administrator;
 	}
 
