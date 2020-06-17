@@ -87,4 +87,14 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/LogoutServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FilmServlet</display-name>
+    <servlet-name>FilmServlet</servlet-name>
+    <servlet-class>bioskop.servlets.FilmServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FilmServlet</servlet-name>
+    <url-pattern>/FilmServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

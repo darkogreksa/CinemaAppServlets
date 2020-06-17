@@ -9,7 +9,7 @@ import org.apache.commons.dbcp2.BasicDataSourceFactory;
 
 
 public class ConnectionManager {
-	private static final String DATABASE_NAME = "BioskopDatabase.db";
+	private static final String DATABASE_NAME = "BioskopDB.db";
 
 	private static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	private static final String WINDOWS_PATH = "C:" + FILE_SEPARATOR + "Users" + FILE_SEPARATOR + "Greksa" + FILE_SEPARATOR + DATABASE_NAME;

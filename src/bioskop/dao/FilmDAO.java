@@ -21,10 +21,9 @@ public class FilmDAO {
 		ResultSet rset = null;
 		
 		try {
-			String query = "SELECT id, naziv, trajanje, zanrovi, godinaProizvodnje "
-					+ "distributer, zemljaPorekla FROM film WHERE"
-					+ "naziv LIKE ? AND trajanje >= ? AND trajanje <= ? AND"
-					+ "zanrovi LIKE ? AND godinaProizvodnje >= ? AND"
+			String query = "SELECT * FROM film WHERE "
+					+ "naziv LIKE ? AND trajanje >= ? AND trajanje <= ? AND "
+					+ "zanrovi LIKE ? AND godinaProizvodnje >= ? AND godinaProizvodnje <= ? AND "
 					+ "distributer LIKE ? AND zemljaPorekla LIKE ?";
 			
 			pstmt = conn.prepareStatement(query);
@@ -40,18 +39,21 @@ public class FilmDAO {
 			System.out.println(pstmt);
 
 			rset = pstmt.executeQuery();
-			
+		
 			while (rset.next()) {
 				index = 1;
 				int id = rset.getInt(index++);
 				String nazivFilma = rset.getString(index++);
-				int trajanjeFilma = rset.getInt(index++);
+				String reziserFilma = rset.getString(index++);
+				String glumciFilma = rset.getString(index++);
 				String zanroviFilma = rset.getString(index++);
-				int godinaProizvodnjeFilma = rset.getInt(index++);
+				int trajanjeFilma = rset.getInt(index++);
 				String distributerFilma = rset.getString(index++);
 				String zemljaPoreklaFilma = rset.getString(index++);
+				int godinaProizvodnjeFilma = rset.getInt(index++);
+				String opisFilma = rset.getString(index++);
 				
-				Film f = new Film(id, nazivFilma, zanroviFilma, trajanjeFilma, distributerFilma, zemljaPoreklaFilma, godinaProizvodnjeFilma);
+				Film f = new Film(id, nazivFilma,reziserFilma, glumciFilma, zanroviFilma, trajanjeFilma, distributerFilma, zemljaPoreklaFilma, godinaProizvodnjeFilma, opisFilma);
 				filmovi.add(f);
 			}
 		} catch (Exception e) {

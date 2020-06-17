@@ -3,10 +3,10 @@ $(document).ready(function() {
 		$.get('LogoutServlet', function(data) {
 			console.log(data);
 
-			if (data.status == 'unauthenticated') {
-				window.location.replace('Login.html');
-				return;
-			}
+//			if (data.status == 'unauthenticated') {
+//				window.location.replace('Login.html');
+//				return;
+//			}
 		});
 	
 		event.preventDefault();
@@ -73,7 +73,7 @@ $(document).ready(function() {
 							'<tr>' +
 								'<td><a href="Film.html?id=' + filteredFilms[it].id + '">' + filteredFilms[it].naziv +  '</a></td>' +
 								'<td>' + filteredFilms[it].trajanje + '</td>' +
-								'<td>' + filteredFilms[it].zanr + '</td>' +
+								'<td>' + filteredFilms[it].zanrovi + '</td>' +
 								'<td>' + filteredFilms[it].godinaProizvodnje + '</td>' +
 								'<td>' + filteredFilms[it].distributer + '</td>' +
 								'<td>' + filteredFilms[it].zemljaPorekla + '</td>' +

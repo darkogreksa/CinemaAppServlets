@@ -1,7 +1,9 @@
 package bioskop.servlets;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,18 +20,18 @@ import model.Korisnik.Role;
 public class FilmsServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
-		if (loggedInUserName == null) {
+//		String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
+//		if (loggedInUserName == null) {
 //			response.sendRedirect("./Login.html");
-			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-			return;
-		}
+//			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+//			return;
+//		}
 		try {
-			Korisnik loggedInUser = KorisnikDAO.getOne(loggedInUserName);
-			if (loggedInUser == null) {
-				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-				return;
-			}
+//			Korisnik loggedInUser = KorisnikDAO.getOne(loggedInUserName);
+//			if (loggedInUser == null) {
+//				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+//				return;
+//			}
 			
 			String naziv = request.getParameter("nazivFilter");
 			naziv = (naziv != null? naziv: "");
@@ -67,6 +69,12 @@ public class FilmsServlet extends HttpServlet {
 			} catch (Exception ex) {}
 			
 			List<Film> filteredFilms = FilmDAO.getAll(naziv, zanrovi, trajanjeOd, trajanjeDo, distributer, zemljaPorekla, godinaProizvodnjeOd, godinaProizvodnjeDo);
+			Map<String, Object> data = new LinkedHashMap<>();
+			data.put("filteredFilms", filteredFilms);
+	
+			request.setAttribute("data", data);
+			request.getRequestDispatcher("./SuccessServlet").forward(request, response);			
+			
 		} catch (Exception ex) {}
 		
 	}
