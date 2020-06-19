@@ -9,7 +9,9 @@ datumRegistracije DATE NOT NULL,
 role VARCHAR(10) NOT NULL DEFAULT 'USER'
 );
 
-INSERT INTO korisnik(username, password, datumRegistracije, role) VALUES ('a', 'a', '2020-01-01', 'ADMIN');
+INSERT INTO korisnik(username, password, datumRegistracije, role) VALUES ('a', 'a', '2020-01-01 20:00:00.00', 'ADMIN');
+INSERT INTO korisnik(username, password, datumRegistracije, role) VALUES ('b', 'b', '2020-01-02 21:00:00.00', 'USER');
+
 
 CREATE TABLE film (
 id INTEGER PRIMARY KEY,

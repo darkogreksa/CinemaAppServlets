@@ -43,7 +43,7 @@ public class ProjekcijaDAO {
 				String vrPrikazivanja = dateToString(vremePrikazivanja);
 				double cena = rSet.getDouble(index++);
 				String administrator = rSet.getString(index++);
-				Korisnik k = KorisnikDAO.getOne(administrator);
+				Korisnik k = KorisnikDAO.get(administrator);
 				
 				Projekcija p = new Projekcija(id, f, tp, s, vrPrikazivanja, cena, k);
 				projekcije.add(p);
@@ -136,7 +136,7 @@ public class ProjekcijaDAO {
 				String vrPrikazivanja = rSet.getString(index++);
 				double cena = rSet.getDouble(index++);
 				String administrator = rSet.getString(index++);
-				Korisnik k = KorisnikDAO.getOne(administrator);
+				Korisnik k = KorisnikDAO.get(administrator);
 				if(k == null) {
 					continue;
 				} else {
@@ -186,7 +186,7 @@ public class ProjekcijaDAO {
 				String vrPrikazivanja = rSet.getString(index++);
 				double cena = rSet.getDouble(index++);
 				String administrator = rSet.getString(index++);
-				Korisnik k = KorisnikDAO.getOne(administrator);
+				Korisnik k = KorisnikDAO.get(administrator);
 				
 				Projekcija p = new Projekcija(id, f, tp, s, vrPrikazivanja, cena, k);
 				return p;

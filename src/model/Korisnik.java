@@ -32,6 +32,15 @@ public class Korisnik {
 		this.role = role;
 	}
 	
+	
+
+	public Korisnik(String username, Date datumRegistracije, Role role) {
+		super();
+		this.username = username;
+		this.datumRegistracije = datumRegistracije;
+		this.role = role;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

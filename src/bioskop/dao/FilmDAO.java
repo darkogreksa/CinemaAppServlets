@@ -67,6 +67,29 @@ public class FilmDAO {
 		return filmovi;
 	}
 	
+	public static int getFilmId() {
+		Connection conn = ConnectionManager.getConnection();
+		int id = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT MAX(id) FROM film";
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				id = rset.getInt(1);
+
+			}
+			id++;
+			return id;
+		} catch (Exception ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		}
+		return 0;
+	}
+	
 	public static ArrayList<Film> orderAll(String column, String ascDesc){
 		Connection conn = ConnectionManager.getConnection();
 		ArrayList<Film> filmovi = new ArrayList<Film>();
@@ -602,39 +625,6 @@ public class FilmDAO {
 		}
 		
 		return false;
-	}
-	
-	public static int getFilmId() {
-		Connection conn = ConnectionManager.getConnection();
-		int id=0;
-		PreparedStatement prSt = null;
-		ResultSet rSet = null;
-		try {
-			String query = "SELECT MAX(id) FROM film";
-			prSt = conn.prepareStatement(query);
-			rSet = prSt.executeQuery();
-		
-			if (rSet.next()) {
-				id = rSet.getInt(1);
-			}
-			id++;
-			return id;
-		} catch (Exception ex) {
-			System.out.println("Greska u SQL upitu!");
-			ex.printStackTrace();
-		} finally {
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-		}
-		return 0;
 	}
 	
 }

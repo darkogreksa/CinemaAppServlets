@@ -22,7 +22,7 @@ public class RegistracijaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String username = request.getParameter("username");
-			if (KorisnikDAO.getOne(username) != null)
+			if (KorisnikDAO.get(username) != null)
 				throw new Exception("Korisnicko ime vec postoji!");
 			if ("".equals(username))
 				throw new Exception("Korisnicko ime je prazno!");

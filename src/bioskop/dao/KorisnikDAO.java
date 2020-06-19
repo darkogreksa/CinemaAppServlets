@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import model.Korisnik;
 import model.Sala;
 import model.Korisnik.Role;
@@ -48,13 +50,13 @@ public class KorisnikDAO {
 		return null;
 	}
 	
-	public static Korisnik getOne(String username) throws Exception {
+	public static Korisnik get(String username) throws Exception {
 		Connection conn = ConnectionManager.getConnection();
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT username, password, role, datumRegistracije FROM korisnik WHERE username = ?";
+			String query = "SELECT username, password, datumRegistracije, role FROM korisnik WHERE username = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, username);
@@ -65,10 +67,10 @@ public class KorisnikDAO {
 			if (rset.next()) {
 				int index = 1;
 				String password = rset.getString(index++);
-				Role role = Role.valueOf(rset.getString(index++));
 				
 				java.sql.Date datum = rset.getDate(index++);
 				Date datumRegistracije = new Date(datum.getTime());
+				Role role = Role.valueOf(rset.getString(index++));
 
 				return new Korisnik(username, password, datumRegistracije, role);
 			}
@@ -81,45 +83,46 @@ public class KorisnikDAO {
 		return null;
 	}
 	
-	public static ArrayList<Korisnik> getAll() {
+	public static ArrayList<Korisnik> getAll(String username, String datumRegistracije, String role) {
+		List<Korisnik> korisnici = new ArrayList<>();
+		
 		Connection conn = ConnectionManager.getConnection();
 		
-		ArrayList<Korisnik> korisnici = new ArrayList<Korisnik>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<Korisnik> korisnicii = new ArrayList<Korisnik>();
 		
 		try {
-			String query = "SELECT username, password, role, datumRegistracije FROM korisnik";
+			String query = "SELECT username, datumRegistracije, role "
+					+ "FROM korisnik WHERE username LIKE ? AND datumRegistracije LIKE ? "
+					+ "AND role LIKE ?";
 			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setString(index++, "%" + username + "%");
+			pstmt.setString(index++, "%" + datumRegistracije + "%");
+			pstmt.setString(index++, "%" + role + "%");
+			System.out.println(pstmt);
+
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				int index = 1;
-				String username = rset.getString(index++);
-				String password = rset.getString(index++);
-				Date datum = rset.getDate(index++);
-				Date datumRegistracije = new Date(datum.getTime());
-				Role role = Role.valueOf(rset.getString(index++));
+				index = 1;
+				String usernameK = rset.getString(index++);
+				java.sql.Date datum = rset.getDate(index++);
+				Date datumRegistracijeK = new Date(datum.getTime());
+				Role roleK = Role.valueOf(rset.getString(index++));
 				
-				Korisnik k = new Korisnik(username, password, datumRegistracije, role);
+				Korisnik k = new Korisnik(usernameK, datumRegistracijeK, roleK);
 				korisnici.add(k);
 			}
 		} catch (Exception e) {
 			System.out.println("Greska u SQL upitu.");
 			e.printStackTrace();
 		} finally {
-			try {
-				pstmt.close();
-			} catch (SQLException exc) {
-				exc.printStackTrace();
-			} try {
-				rset.close();
-			} catch (SQLException exc) {
-				exc.printStackTrace();
-			}
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 		}
-		return korisnici;
+		return (ArrayList<Korisnik>) korisnici;
 	}
 	
 	public static boolean dodajKorisnika(Korisnik korisnik) {
