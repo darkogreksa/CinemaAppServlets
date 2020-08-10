@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
 import model.Film;
 import model.Korisnik;
@@ -17,321 +21,222 @@ import model.Sala;
 import model.TipProjekcije;
 
 public class ProjekcijaDAO {
-	
-	public static ArrayList<Projekcija> getAll() {
+	public static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+	public static List<Projekcija> getAll(String filmFilter, String tipProjekcijeFilter, String salaFilter, double cenaOdFilter, double cenaDoFilter) throws ParseException {
+
 		Connection conn = ConnectionManager.getConnection();
-		
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
 		ArrayList<Projekcija> projekcije = new ArrayList<Projekcija>();
-		PreparedStatement prSt = null;
-		ResultSet rSet = null;
-		
-		try {
-			String query = "SELECT * FROM projekcija";
-			prSt = conn.prepareStatement(query);
-			rSet = prSt.executeQuery();
-		
-			while (rSet.next()) {
-				int index = 1;
-				int id = rSet.getInt(index++);
-				int film = rSet.getInt(index++);
-				Film f = FilmDAO.get(film);
-				int tipProjekcije = rSet.getInt(index++);
-				TipProjekcije tp = TipProjekcijeDAO.getId(tipProjekcije);
-				int sala = rSet.getInt(index++);
-				Sala s = SalaDAO.getId(sala);
-				Date vremePrikazivanja = rSet.getDate(index++);
-				String vrPrikazivanja = dateToString(vremePrikazivanja);
-				double cena = rSet.getDouble(index++);
-				String administrator = rSet.getString(index++);
-				Korisnik k = KorisnikDAO.get(administrator);
-				
-				Projekcija p = new Projekcija(id, f, tp, s, vrPrikazivanja, cena, k);
-				projekcije.add(p);
-			}
-		} catch (Exception e) {
-			System.out.println("Greska u SQL upitu!");
-			e.printStackTrace();
-		}finally {
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-			try {
-				rSet.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-		}
-		return projekcije;
-	}
+
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String formatDateTime = now.format(formatter);
+		System.out.println(formatDateTime);
 	
-	public static ArrayList<Film> getAllFilmovi(){
-		Connection conn = ConnectionManager.getConnection();
-		
-		ArrayList<Film> filmovi = new ArrayList<Film>();
-		PreparedStatement prSt = null;
-		ResultSet rSet = null;
-		
 		try {
-			String query = "SELECT * FROM film";
-			prSt = conn.prepareStatement(query);
-			rSet = prSt.executeQuery();
-		
-			
-			while (rSet.next()) {
-				int index = 1;
-				int id = rSet.getInt(index++);
-				String naziv = rSet.getString(index++);
-				String reziser = rSet.getString(index++);
-				String glumci = rSet.getString(index++);
-				String zanrovi = rSet.getString(index++);
-				int trajanje = rSet.getInt(index++);
-				String distributer = rSet.getString(index++);
-				String zemljaPorekla = rSet.getString(index++);
-				int godinaProizvodnje = rSet.getInt(index++);
-				String opis = rSet.getString(index++);
-				
-				Film f = new Film(id,naziv,reziser,glumci,zanrovi,trajanje,distributer,zemljaPorekla,godinaProizvodnje,opis);
-				filmovi.add(f);
-			}
-		} catch (Exception e) {
-			System.out.println("Greska u SQL upitu!");
-			e.printStackTrace();
-		}finally {
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-			try {
-				rSet.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-		}
-		return filmovi;
-	}
+			String query = "SELECT projekcija.id, projekcija.cenaKarte, projekcija.vremePrikazivanja, projekcija.obrisan, film.id, film.naziv, tipProjekcije.id, tipProjekcije.naziv, sala.id, sala.naziv, korisnik.username\n" + 
+					"FROM projekcija\n" + 
+					"JOIN film ON film.id = projekcija.film_id\n" + 
+					"JOIN tipProjekcije ON tipProjekcije.id = projekcija.tipProjekcije_id\n" + 
+					"JOIN sala ON sala.id = projekcija.sala_id\n" + 
+					"JOIN korisnik ON korisnik.username = projekcija.username\n" + 
+					"WHERE projekcija.cenaKarte >= ? AND projekcija.cenaKarte <= ? AND film.naziv LIKE ?\n" + 
+					"AND tipProjekcije.naziv LIKE ? AND sala.naziv LIKE ? AND projekcija.vremePrikazivanja >= '" + now + "' AND projekcija.obrisan = 0";
+
+			pstmt = conn.prepareStatement(query);
+			int index = 1;
+			pstmt.setDouble(index++, cenaOdFilter);
+			pstmt.setDouble(index++, cenaDoFilter);
+			pstmt.setString(index++, "%" + filmFilter + "%");
+			pstmt.setString(index++, "%" + tipProjekcijeFilter + "%");
+			pstmt.setString(index++, "%" + salaFilter + "%");
 	
-	public static ArrayList<Projekcija> orderAll(String column, String ascDesc){
-		Connection conn = ConnectionManager.getConnection();
-		ArrayList<Projekcija> projekcije = new ArrayList<Projekcija>();
-		
-		PreparedStatement prSt = null;
-		ResultSet rSet = null;
-		try {
-			String query = "SELECT * FROM projekcija ORDER BY "+column+" "+ascDesc;
-			prSt = conn.prepareStatement(query);
-			rSet = prSt.executeQuery();
-			
-			while (rSet.next()) {
-				int index = 1;
-				int id = rSet.getInt(index++);
-				int film = rSet.getInt(index++);
-				Film f = FilmDAO.get(film);
-				int tipProjekcije = rSet.getInt(index++);
-				TipProjekcije tp = TipProjekcijeDAO.getId(tipProjekcije);
-				int sala = rSet.getInt(index++);
-				Sala s = SalaDAO.getId(sala);
-				String vrPrikazivanja = rSet.getString(index++);
-				double cena = rSet.getDouble(index++);
-				String administrator = rSet.getString(index++);
-				Korisnik k = KorisnikDAO.get(administrator);
-				if(k == null) {
-					continue;
-				} else {
-					Projekcija p = new Projekcija(id, f, tp, s, vrPrikazivanja, cena, k);
-					projekcije.add(p);
-				}
+			System.out.println(pstmt);
+
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				index = 1;
+				Integer id = rset.getInt(index++);
 				
+				Double cenaKarte = rset.getDouble(index++);
+				
+				Date vreme = rset.getDate(index++);
+				Timestamp vremePrikazivanja = new Timestamp(vreme.getTime());
+				
+				Integer obrisan = rset.getInt(index++);
+
+				Integer idFilma = rset.getInt(index++);
+				String nazivFilmaa = rset.getString(index++);
+				Film film = new Film(idFilma, nazivFilmaa);
+							
+				Integer idTipaProjekcije = rset.getInt(index++);
+				String nazivProjekcije = rset.getString(index++);				
+				TipProjekcije tipProjekcijee = new TipProjekcije(idTipaProjekcije, nazivProjekcije);
+				
+				Integer idSale = rset.getInt(index++);
+				String nazivSale = rset.getString(index++);
+				Sala salaa = new Sala(idSale, nazivSale);
+								
+				String username = rset.getString(index++);
+				Korisnik korisnik = new Korisnik(username);
+						
+				Projekcija projekcija = new Projekcija(id, film, tipProjekcijee, salaa, vremePrikazivanja, cenaKarte, korisnik, obrisan);
+				projekcije.add(projekcija);
 				
 			}
-		} catch (Exception e) {
-			System.out.println("Greska u SQL upitu!");
-			e.printStackTrace();
+			System.out.println(projekcije);
+			return projekcije;
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu");
+			ex.printStackTrace();
+
 		}finally {
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-			try {
-				rSet.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
-		return projekcije;
+		return null;
 	}
-	
-	public static Projekcija getId(int id) {
+
+	public static boolean delete(int id) {
 		Connection conn = ConnectionManager.getConnection();
-		PreparedStatement prSt = null;
-		ResultSet rSet = null;
-		
+
+		PreparedStatement pstmt = null;
 		try {
-			String query = "SELECT * FROM projekcija WHERE id=?";
-			prSt = conn.prepareStatement(query);
-			prSt.setInt(1, id);
-			rSet = prSt.executeQuery();
-			
-			if(rSet.next()) {
-				int index = 2;
-				int film = rSet.getInt(index++);
-				Film f = FilmDAO.get(film);
-				int tipProjekcije = rSet.getInt(index++);
-				TipProjekcije tp = TipProjekcijeDAO.getId(tipProjekcije);
-				int sala = rSet.getInt(index++);
-				Sala s = SalaDAO.getId(sala);
-				String vrPrikazivanja = rSet.getString(index++);
-				double cena = rSet.getDouble(index++);
-				String administrator = rSet.getString(index++);
-				Korisnik k = KorisnikDAO.get(administrator);
-				
-				Projekcija p = new Projekcija(id, f, tp, s, vrPrikazivanja, cena, k);
-				return p;
-			}
-		}  catch (Exception e) {
-			System.out.println("Greska u SQL upitu!");
-			e.printStackTrace();
+			String query = "UPDATE projekcija SET obrisan = 1 WHERE id = ?";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, id);
+			System.out.println(pstmt);
+
+			return pstmt.executeUpdate() == 1;
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}
+		return false;
+	}
+
+	public static Projekcija get(int id) throws ParseException {
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		try {
+			//pisi velikim slovima querije! by dimi
+			String query = "SELECT projekcija.id, projekcija.cenaKarte, projekcija.vremePrikazivanja, projekcija.obrisan, film.id, film.naziv, tipProjekcije.id, tipProjekcije.naziv, sala.id, sala.naziv, korisnik.username\n" + 
+					"FROM projekcija\n" + 
+					"JOIN film ON film.id = projekcija.film_id\n" + 
+					"JOIN tipProjekcije ON tipProjekcije.id = projekcija.tipProjekcije_id\n" + 
+					"JOIN sala ON sala.id = projekcija.sala_id\n" + 
+					"JOIN korisnik ON korisnik.username = projekcija.username WHERE projekcija.id = ?";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, id);
+			System.out.println(pstmt);
+
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				int index = 2;
+				
+				Integer idFilma = rset.getInt(index++);
+				String nazivFilma = rset.getString(index++);
+				Film film = new Film(idFilma, nazivFilma);
+				
+				Integer idTP = rset.getInt(index++);
+				String nazivProjekcije = rset.getString(index++);				
+				TipProjekcije tipProjekcije = new TipProjekcije(idTP, nazivProjekcije);
+				
+				Integer idSale = rset.getInt(index++);
+				String nazivSale = rset.getString(index++);
+				Sala sala = new Sala(idSale, nazivSale);
+				
+				Date vreme = rset.getDate(index++);
+				Timestamp vremePrikazivanja = new Timestamp(vreme.getTime());
+				
+				Double cenaKarte = rset.getDouble(index++);
+								
+				String username = rset.getString(index++);
+				Korisnik korisnik = new Korisnik(username);
+				
+				Integer obrisan = rset.getInt(index++);
+						
+				Projekcija projekcija = new Projekcija(id, film, tipProjekcije, sala, vremePrikazivanja, cenaKarte, korisnik, obrisan);
+				return projekcija;
 			}
-			try {
-				rSet.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		return null;
 	}
 	
-	public static boolean dodajProjekciju(Projekcija projekcija) {
+	public static boolean add(Projekcija projekcija) throws Exception {
+
 		Connection conn = ConnectionManager.getConnection();
-		
-		PreparedStatement prSt = null;
-		
+
+		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO projekcija (film, tipProjekcije, sala, vremePrikazivanja, cena, administrator)"
-					+ "VALUES (?,?,?,?,?,?)";
-			prSt = conn.prepareStatement(query);
-			
+			String query = "INSERT INTO projekcija (tipProjekcije_id, sala_id, vremePrikazivanja, cenaKarte, username, film_id)"
+					+ "VALUES (?, ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(query);
+
+
 			int index = 1;
-			prSt.setInt(index++, projekcija.getFilm().getId());
-			prSt.setInt(index++, projekcija.getTipProjekcije().getId());
-			prSt.setInt(index++, projekcija.getSala().getId());
-			Date vremePr = stringToDateForWrite(projekcija.getVremePrikazivanja());
-			java.sql.Date vremeP = new java.sql.Date(vremePr.getTime());
-			prSt.setDate(index++,vremeP);
-			prSt.setDouble(index++, projekcija.getCena());
-			prSt.setString(index++, projekcija.getAdministrator().getUsername());
+			pstmt.setInt(index++, projekcija.getTipProjekcije().getId());
+			pstmt.setInt(index++, projekcija.getSala().getId());
+			pstmt.setTimestamp(index++, projekcija.getVremePrikazivanja());
+			pstmt.setDouble(index++, projekcija.getCenaKarte());
+			pstmt.setString(index++, projekcija.getAdministrator().getUsername());
+			pstmt.setInt(index++, projekcija.getFilm().getId());
 			
-			return prSt.executeUpdate() == 1;
-		
+			System.out.println(pstmt);
+
+			return pstmt.executeUpdate() == 1;
+
+		} catch (Exception ex) {
+			System.out.println("Greska SQL add");
+			ex.printStackTrace();
+		}finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}		
+		return false;
+	}
+	
+	public static int getProjekcijaId() {
+		Connection conn = ConnectionManager.getConnection();
+		int id = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT MAX(id) FROM projekcija";
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				id = rset.getInt(1);
+
+			}
+			id++;
+			return id;
 		} catch (Exception ex) {
 			System.out.println("Greska u SQL upitu!");
 			ex.printStackTrace();
-		} finally {
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
 		}
-		return false;
+		return 0;
 	}
-	
-	public static boolean obrisiProjekciju(int id) {
-		Connection conn = ConnectionManager.getConnection();
-		
-		PreparedStatement prSt = null;
-		try {
-			String query = "";
-			prSt = conn.prepareStatement(query);
-			prSt.setInt(1, id);
-			
-			return prSt.executeUpdate() == 1;
-		}catch (Exception ex) {
-			System.out.println("Greska u SQL upitu!");
-			ex.printStackTrace();
-		} finally {
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-		}
-		
-		return false;
-	}
-	
-	public static boolean obrisiProjekcijuById(int id) {
-		Connection conn = ConnectionManager.getConnection();
-		
-		PreparedStatement prSt = null;
-		try {
-			String query = "DELETE projekcija WHERE id = ?";
-			prSt = conn.prepareStatement(query);
-			prSt.setInt(1, id);
-			
-			return prSt.executeUpdate() == 1;
-		}catch (Exception ex) {
-			System.out.println("Greska u SQL upitu!");
-			ex.printStackTrace();
-		} finally {
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-		}
-		
-		return false;
-	}
-	
-	public static String dateToString(Date date) {
-		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
-		String datum;
-		datum = formatvr.format(date);
-		return datum;
-	}
-
-	public static Date stringToDate(String datum) {
-
-		try {
-			DateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
-
-			return formatvr.parse(datum);
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		return null;
-
-	}
-	public static String dateToStringForWrite(Date date) {
-		SimpleDateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
-		String datum;
-		datum = formatvr.format(date);
-		return datum;
-	}
-	public static Date stringToDateForWrite(String datum) {
-
-		try {
-			DateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
-
-			return formatvr.parse(datum);
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		return null;
-
-	}
-
 }

@@ -97,4 +97,24 @@
     <servlet-name>FilmServlet</servlet-name>
     <url-pattern>/FilmServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>KorisnikServlet</display-name>
+    <servlet-name>KorisnikServlet</servlet-name>
+    <servlet-class>bioskop.servlets.KorisnikServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>KorisnikServlet</servlet-name>
+    <url-pattern>/KorisnikServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProjekcijeServlet</display-name>
+    <servlet-name>ProjekcijeServlet</servlet-name>
+    <servlet-class>bioskop.servlets.ProjekcijeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProjekcijeServlet</servlet-name>
+    <url-pattern>/ProjekcijeServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

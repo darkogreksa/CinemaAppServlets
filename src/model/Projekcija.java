@@ -1,111 +1,126 @@
 package model;
 
+import java.sql.Timestamp;
+
 public class Projekcija {
 	
 	private int id;
 	private Film film;
 	private TipProjekcije tipProjekcije;
 	private Sala sala;
-	private String vremePrikazivanja;
-	private double cena;
+	private Timestamp vremePrikazivanja;
+	private double cenaKarte;
 	private Korisnik administrator;
+	private int obrisan;
 	
-	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, String vremePrikazivanja, double cena,
-			Korisnik administrator) {
+	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Timestamp vremePrikazivanja,
+			double cenaKarte, Korisnik administrator, int obrisan) {
 		super();
 		this.id = id;
 		this.film = film;
 		this.tipProjekcije = tipProjekcije;
 		this.sala = sala;
 		this.vremePrikazivanja = vremePrikazivanja;
-		this.cena = cena;
+		this.cenaKarte = cenaKarte;
 		this.administrator = administrator;
+		this.obrisan = obrisan;
+	}
+	
+	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Timestamp vremePrikazivanja) {
+		super();
+		this.id = id;
+		this.film = film;
+		this.tipProjekcije = tipProjekcije;
+		this.sala = sala;
+		this.vremePrikazivanja = vremePrikazivanja;
 	}
 
 
-	public Projekcija(int id2, int film2, int tipProjekcije2, int sala2, String vrPrikazivanja, double cena2,
-			String administrator2) {
-		// TODO Auto-generated constructor stub
+
+
+
+	public Projekcija(int id) {
+		super();
+		this.id = id;
 	}
 
+
+
+	public Projekcija() {
+		super();
+	}
 
 	public int getId() {
 		return id;
 	}
 
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 	public Film getFilm() {
 		return film;
 	}
 
-
 	public void setFilm(Film film) {
 		this.film = film;
 	}
-
 
 	public TipProjekcije getTipProjekcije() {
 		return tipProjekcije;
 	}
 
-
 	public void setTipProjekcije(TipProjekcije tipProjekcije) {
 		this.tipProjekcije = tipProjekcije;
 	}
-
 
 	public Sala getSala() {
 		return sala;
 	}
 
-
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
 
-
-	public String getVremePrikazivanja() {
+	public Timestamp getVremePrikazivanja() {
 		return vremePrikazivanja;
 	}
 
-
-	public void setVremePrikazivanja(String vremePrikazivanja) {
+	public void setVremePrikazivanja(Timestamp vremePrikazivanja) {
 		this.vremePrikazivanja = vremePrikazivanja;
 	}
 
-
-	public double getCena() {
-		return cena;
+	public double getCenaKarte() {
+		return cenaKarte;
 	}
 
-
-	public void setCena(double cena) {
-		this.cena = cena;
+	public void setCenaKarte(double cenaKarte) {
+		this.cenaKarte = cenaKarte;
 	}
-
 
 	public Korisnik getAdministrator() {
 		return administrator;
 	}
 
-
 	public void setAdministrator(Korisnik administrator) {
 		this.administrator = administrator;
 	}
 
+	public int getObrisan() {
+		return obrisan;
+	}
+
+	public void setObrisan(int obrisan) {
+		this.obrisan = obrisan;
+	}
 
 	@Override
 	public String toString() {
 		return "Projekcija [id=" + id + ", film=" + film + ", tipProjekcije=" + tipProjekcije + ", sala=" + sala
-				+ ", vremePrikazivanja=" + vremePrikazivanja + ", cena=" + cena + ", administrator=" + administrator
-				+ "]";
+				+ ", vremePrikazivanja=" + vremePrikazivanja + ", cenaKarte=" + cenaKarte + ", administrator="
+				+ administrator + ", obrisan=" + obrisan + "]";
 	}
-	
+
 	
 
 }

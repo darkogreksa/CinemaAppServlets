@@ -11,6 +11,15 @@ public class TipProjekcije {
 		this.naziv = naziv;
 	}
 	
+	
+	
+	public TipProjekcije(String naziv) {
+		super();
+		this.naziv = naziv;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}

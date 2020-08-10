@@ -3,12 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Dodavanje filma</title>
-	<script src="js/jquery-3.3.1.js"></script>
-	<script src="js/DodajFilm.js"></script>
 </head>
 <body>
 	<h3>Dodavanje filma:</h3>
-	<form>
+	<form action="FilmsServlet" method="post">
+		<input type="hidden" name="action" value="add"/>
 		<table>
 			<tr><td align="right">Naziv:</td><td><input type="text" id="nazivInput"/></td></tr>
 			<tr><td align="right">Reziser:</td><td><input type="text" id="reziserInput"/></td></tr>

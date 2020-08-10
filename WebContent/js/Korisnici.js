@@ -50,7 +50,7 @@ $(document).ready(function() {
 				for(it in filteredKorisnici) {
 					korisniciTable.append(
 							'<tr>' +
-							'<td><a href="Korisnik.html?id=' + filteredKorisnici[it].id + '">' + filteredKorisnici[it].username +  '</a></td>' +
+							'<td><a href="Korisnik.html?username=' + filteredKorisnici[it].username + '">' + filteredKorisnici[it].username +  '</a></td>' +
 							'<td>' + filteredKorisnici[it].datumRegistracije + '</td>' +
 							'<td>' + filteredKorisnici[it].role + '</td>' +
 						'</tr>'

@@ -25,12 +25,12 @@ public class KorisniciServlet extends HttpServlet {
 //			return;
 //		}
 		try {
-//			Korisnik loggedInUser = KorisnikDAO.getOne(loggedInUserName);
+//			Korisnik loggedInUser = KorisnikDAO.get(loggedInUserName);
 //			if (loggedInUser == null) {
 //				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
 //				return;
 //			}
-			
+//			
 			String username = request.getParameter("usernameFilter");
 			username = (username != null? username: "");
 			String datum = request.getParameter("datumFilter");

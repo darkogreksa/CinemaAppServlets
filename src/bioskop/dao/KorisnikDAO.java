@@ -56,7 +56,7 @@ public class KorisnikDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT username, password, datumRegistracije, role FROM korisnik WHERE username = ?";
+			String query = "SELECT username, datumRegistracije, role FROM korisnik WHERE username = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, username);
@@ -65,7 +65,7 @@ public class KorisnikDAO {
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
-				int index = 1;
+				int index = 2;
 				String password = rset.getString(index++);
 				
 				java.sql.Date datum = rset.getDate(index++);

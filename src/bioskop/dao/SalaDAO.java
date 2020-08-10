@@ -4,81 +4,76 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Sala;
 
 public class SalaDAO {
 	
-	public static Sala get(String naziv) {
-		java.sql.Connection conn = ConnectionManager.getConnection();
-		java.sql.PreparedStatement prSt = null;
-		java.sql.ResultSet rSet = null;
+	public static Sala get(int id) {
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		
 		try {
-			String query = "SELECT * FROM sala WHERE naziv = ?";
-			prSt = conn.prepareStatement(query);
-			prSt.setString(1, naziv);
-			rSet = prSt.executeQuery();
+			String query = "SELECT id, naziv FROM sala WHERE id = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, id);
+			rset = pstmt.executeQuery();
 			
-			if (rSet.next()) {
-				int index = 2;
-				int id = rSet.getInt(index++);
-				Sala s = new Sala(id, naziv);
+			if (rset.next()) {
+				int index = 1;
+				int idd = rset.getInt(index++);
+				String naziv = rset.getString(index++);
 				
-			return s;
+				return new Sala(idd, naziv);
 			}
 		}catch (Exception ex) {
 			System.out.println("Greska u SQL upitu!");
 			ex.printStackTrace();
 		} finally {
-			try {
-				prSt.close();
-			} catch (java.sql.SQLException ex1) {
-				ex1.printStackTrace();
-			}
-			try {
-				rSet.close();
-			} catch (java.sql.SQLException ex1) {
-				ex1.printStackTrace();
-			}
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		return null;
 	}
 	
-	public static Sala getId(int id) {
+	public static List<Sala> getAll() {
+		ArrayList<Sala> sale = new ArrayList<>();
+
 		Connection conn = ConnectionManager.getConnection();
-		PreparedStatement prSt = null;
-		ResultSet rSet = null;
-		
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
 		try {
-			String query = "SELECT * FROM sala WHERE id = ?";
-			prSt = conn.prepareStatement(query);
-			prSt.setInt(1, id);
-			rSet = prSt.executeQuery();
-			
-			if (rSet.next()) {
-				int index = 2;
-				String nazivSale = rSet.getString(index++);
-				Sala s = new Sala(id, nazivSale);
-				
-			return s;
+			String query = "SELECT * FROM sala";
+
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				int index = 1;
+				int id = rset.getInt(index++);
+				String naziv = rset.getString(index++);
+
+				Sala sala = new Sala(id, naziv);
+				sale.add(sala);
 			}
-		}catch (Exception ex) {
+			return sale;
+		} catch (SQLException ex) {
 			System.out.println("Greska u SQL upitu!");
 			ex.printStackTrace();
+
 		} finally {
-			try {
-				prSt.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
-			try {
-				rSet.close();
-			} catch (SQLException ex1) {
-				ex1.printStackTrace();
-			}
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		return null;
+
 	}
 
 }
