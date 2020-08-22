@@ -32,30 +32,11 @@ public class Film {
 		this.obrisan = obrisan;
 	}
 
-
-
-	public Film(int id, String naziv, String zanrovi, int trajanje, String distributer, String zemljaPorekla,
-			int godinaProizvodnje) {
-		super();
-		this.id = id;
-		this.naziv = naziv;
-		this.zanrovi = zanrovi;
-		this.trajanje = trajanje;
-		this.distributer = distributer;
-		this.zemljaPorekla = zemljaPorekla;
-		this.godinaProizvodnje = godinaProizvodnje;
-	}
-
-
-	
-
 	public Film(int id, String naziv) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
 	}
-
-
 
 	public int getId() {
 		return id;

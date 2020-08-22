@@ -28,6 +28,7 @@ $(document).ready(function() {
 	var korisniciLink = $('#korisniciLink');
 	var backLink = $('#backLink');
 	var adminParagraph = $('#adminParagraph');
+	var projekcijeLink = $('#projekcijeLink');
 	
 	function getFilmovi() {
 		var nazivFilter = nazivFilterInput.val();

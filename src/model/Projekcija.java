@@ -35,16 +35,10 @@ public class Projekcija {
 		this.vremePrikazivanja = vremePrikazivanja;
 	}
 
-
-
-
-
 	public Projekcija(int id) {
 		super();
 		this.id = id;
 	}
-
-
 
 	public Projekcija() {
 		super();
@@ -120,7 +114,4 @@ public class Projekcija {
 				+ ", vremePrikazivanja=" + vremePrikazivanja + ", cenaKarte=" + cenaKarte + ", administrator="
 				+ administrator + ", obrisan=" + obrisan + "]";
 	}
-
-	
-
 }

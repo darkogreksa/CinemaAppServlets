@@ -38,14 +38,14 @@ public class ProjekcijaDAO {
 		System.out.println(formatDateTime);
 	
 		try {
-			String query = "SELECT projekcija.id, projekcija.cenaKarte, projekcija.vremePrikazivanja, projekcija.obrisan, film.id, film.naziv, tipProjekcije.id, tipProjekcije.naziv, sala.id, sala.naziv, korisnik.username\n" + 
-					"FROM projekcija\n" + 
-					"JOIN film ON film.id = projekcija.film_id\n" + 
-					"JOIN tipProjekcije ON tipProjekcije.id = projekcija.tipProjekcije_id\n" + 
-					"JOIN sala ON sala.id = projekcija.sala_id\n" + 
-					"JOIN korisnik ON korisnik.username = projekcija.username\n" + 
-					"WHERE projekcija.cenaKarte >= ? AND projekcija.cenaKarte <= ? AND film.naziv LIKE ?\n" + 
-					"AND tipProjekcije.naziv LIKE ? AND sala.naziv LIKE ? AND projekcija.vremePrikazivanja >= '" + now + "' AND projekcija.obrisan = 0";
+			String query = "SELECT projekcija.id, projekcija.cenaKarte, projekcija.vremePrikazivanja, projekcija.obrisan, film.id, film.naziv, tipProjekcije.id, tipProjekcije.naziv, sala.id, sala.naziv, korisnik.username " + 
+					"FROM projekcija " + 
+					"JOIN film ON film.id = projekcija.film_id " + 
+					"JOIN tipProjekcije ON tipProjekcije.id = projekcija.tipProjekcije_id " + 
+					"JOIN sala ON sala.id = projekcija.sala_id " + 
+					"JOIN korisnik ON korisnik.username = projekcija.username " + 
+					"WHERE projekcija.cenaKarte >= ? AND projekcija.cenaKarte <= ? AND film.naziv LIKE ? AND " + 
+					"tipProjekcije.naziv LIKE ? AND sala.naziv LIKE ? AND projekcija.obrisan = 0";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;

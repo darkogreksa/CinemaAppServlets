@@ -31,15 +31,6 @@ public class ProjekcijeServlet extends HttpServlet {
 			String salaFilter = request.getParameter("salaFilterInput");
 			salaFilter = (salaFilter != null ? salaFilter : "");
 			
-//			Timestamp vremePrikazivanjaOdFilter = yyyy-mm-dd hh:mm:ss;
-//			try {
-//				String vremePrikazivanjaOdFilterInput = request.getParameter("vremePrikazivanjaOdFilterInput");
-//				vremePrikazivanjaOdFilter = Double.parseDouble(vremePrikazivanjaOdFilter);
-//				vremePrikazivanjaOdFilter = (vremePrikazivanjaOdFilter >= 0.0 ? vremePrikazivanjaOdFilter : 0.0);
-//			} catch (Exception ex) {
-//			}
-			
-			// JEBO ME DAN KAD SAM UPISAO OVO
 			double cenaOdFilter = 0.0;
 			try {
 				String cenaOdFilterInput = request.getParameter("cenaOdFilterInput");
@@ -62,6 +53,7 @@ public class ProjekcijeServlet extends HttpServlet {
 			data.put("filteredProjekcije", filteredProjekcije);
 	
 			request.setAttribute("data", data);
+			System.out.println("data " +  data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);			
 			
 		} catch (Exception ex) {

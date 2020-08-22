@@ -54,9 +54,10 @@ public class FilmDAO {
 				String opisFilma = rset.getString(index++);
 				Integer obrisan = rset.getInt(index++);
 				
-				Film f = new Film(id, nazivFilma,reziserFilma, glumciFilma, zanroviFilma, trajanjeFilma, distributerFilma, zemljaPoreklaFilma, godinaProizvodnjeFilma, opisFilma, obrisan);
+				Film f = new Film(id, nazivFilma, reziserFilma, glumciFilma, zanroviFilma, trajanjeFilma, distributerFilma, zemljaPoreklaFilma, godinaProizvodnjeFilma, opisFilma, obrisan);
 				filmovi.add(f);
 			}
+			return filmovi;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

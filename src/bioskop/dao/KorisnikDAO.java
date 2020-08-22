@@ -56,7 +56,7 @@ public class KorisnikDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			String query = "SELECT username, datumRegistracije, role FROM korisnik WHERE username = ?";
+			String query = "SELECT * FROM korisnik WHERE username = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, username);

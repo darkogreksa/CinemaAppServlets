@@ -17,6 +17,7 @@ $(document).ready(function() {
 	var tipProjekcijeFilterInput = $('#tipProjekcijeFilterInput');
 	var salaFilterInput = $('#salaFilterInput');
 	var vremePrikazivanjaOdFilterInput = $('#vremePrikazivanjaOdFilterInput');
+	var distributerFilterInput = $('#distributerFilterInput');
 	var cenaOdFilterInput = $('#cenaOdFilterInput');
 	var cenaDoFilterInput = $('#cenaDoFilterInput');
 
@@ -27,13 +28,15 @@ $(document).ready(function() {
 		var filmFilter = filmFilterInput.val();
 		var tipProjekcijeFilter = tipProjekcijeFilterInput.val();
 		var salaFilter = salaFilterInput.val();
-		var vremePrikazivanjaOdFilter = vremePrikazivanjaOdFilterInput.val();
+//		var vremePrikazivanjaOdFilter = vremePrikazivanjaOdFilterInput.val();
+		var distributerFilter = distributerFilterInput.val();
 		var cenaOdFilter = cenaOdFilterInput.val();
 		var cenaDoFilter = cenaDoFilterInput.val();
 		console.log('filmFilter: ' + filmFilter);
 		console.log('tipProjekcijeFilter: ' + tipProjekcijeFilter);
 		console.log('salaFilter' + salaFilter);
-		console.log('vremePrikazivanjaOdFilter: ' + vremePrikazivanjaOdFilter);
+//		console.log('vremePrikazivanjaOdFilter: ' + vremePrikazivanjaOdFilter);
+		console.log('distributerFilter: ' + distributerFilter);
 		console.log('cenaOdFilter: ' + cenaOdFilter);
 		console.log('cenaDoFilter: ' + cenaDoFilter);
 		
@@ -41,7 +44,8 @@ $(document).ready(function() {
 				'filmFilter': filmFilter,
 				'tipProjekcijeFilter': tipProjekcijeFilter,
 				'salaFilter': salaFilter,
-				'vremePrikazivanjaOdFilter': vremePrikazivanjaOdFilter,
+//				'vremePrikazivanjaOdFilter': vremePrikazivanjaOdFilter,
+				'distributerFilter': distributerFilter,
 				'cenaOdFilter': cenaOdFilter,
 				'cenaDoFilter': cenaDoFilter
 		};
@@ -59,10 +63,11 @@ $(document).ready(function() {
 				for (it in filteredProjekcije) {
 					projekcijeTable.append(
 							'<tr>' +
-								'<td><a href="Projekcija.html?id=' + filteredProjekcije[it].id + '">' + filteredProjekcije[it].film +  '</a></td>' +
-								'<td>' + filteredProjekcije[it].tipProjekcije + '</td>' +
-								'<td>' + filteredProjekcije[it].sala + '</td>' +
+								'<td><a href="Projekcija.html?id=' + filteredProjekcije[it].id + '">' + filteredProjekcije[it].film.naziv +  '</a></td>' +
+								'<td>' + filteredProjekcije[it].tipProjekcije.naziv + '</td>' +
+								'<td>' + filteredProjekcije[it].sala.naziv + '</td>' +
 								'<td>' + filteredProjekcije[it].vremePrikazivanja + '</td>' +
+								'<td>' + filteredProjekcije[it].distributer + '</td>' +
 								'<td>' + filteredProjekcije[it].cenaKarte + '</td>' +
 							'</tr>'
 					)
@@ -91,6 +96,12 @@ $(document).ready(function() {
 		return false;
 	});
 	vremePrikazivanjaOdFilterInput.on('keyup', function(event) {
+		getProjekcije();
+
+		event.preventDefault();
+		return false;
+	});
+	distributerFilterInput.on('keyup', function(event) {
 		getProjekcije();
 
 		event.preventDefault();
