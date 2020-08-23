@@ -57,7 +57,7 @@ public class ProjekcijeServlet extends HttpServlet {
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);			
 			
 		} catch (Exception ex) {
-			System.out.print("greska");
+			System.out.print("Greska!");
 		}
 	}
 	

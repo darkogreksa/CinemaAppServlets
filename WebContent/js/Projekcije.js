@@ -17,7 +17,6 @@ $(document).ready(function() {
 	var tipProjekcijeFilterInput = $('#tipProjekcijeFilterInput');
 	var salaFilterInput = $('#salaFilterInput');
 	var vremePrikazivanjaOdFilterInput = $('#vremePrikazivanjaOdFilterInput');
-	var distributerFilterInput = $('#distributerFilterInput');
 	var cenaOdFilterInput = $('#cenaOdFilterInput');
 	var cenaDoFilterInput = $('#cenaDoFilterInput');
 
@@ -29,14 +28,12 @@ $(document).ready(function() {
 		var tipProjekcijeFilter = tipProjekcijeFilterInput.val();
 		var salaFilter = salaFilterInput.val();
 //		var vremePrikazivanjaOdFilter = vremePrikazivanjaOdFilterInput.val();
-		var distributerFilter = distributerFilterInput.val();
 		var cenaOdFilter = cenaOdFilterInput.val();
 		var cenaDoFilter = cenaDoFilterInput.val();
 		console.log('filmFilter: ' + filmFilter);
 		console.log('tipProjekcijeFilter: ' + tipProjekcijeFilter);
 		console.log('salaFilter' + salaFilter);
 //		console.log('vremePrikazivanjaOdFilter: ' + vremePrikazivanjaOdFilter);
-		console.log('distributerFilter: ' + distributerFilter);
 		console.log('cenaOdFilter: ' + cenaOdFilter);
 		console.log('cenaDoFilter: ' + cenaDoFilter);
 		
@@ -45,7 +42,6 @@ $(document).ready(function() {
 				'tipProjekcijeFilter': tipProjekcijeFilter,
 				'salaFilter': salaFilter,
 //				'vremePrikazivanjaOdFilter': vremePrikazivanjaOdFilter,
-				'distributerFilter': distributerFilter,
 				'cenaOdFilter': cenaOdFilter,
 				'cenaDoFilter': cenaDoFilter
 		};
@@ -67,7 +63,6 @@ $(document).ready(function() {
 								'<td>' + filteredProjekcije[it].tipProjekcije.naziv + '</td>' +
 								'<td>' + filteredProjekcije[it].sala.naziv + '</td>' +
 								'<td>' + filteredProjekcije[it].vremePrikazivanja + '</td>' +
-								'<td>' + filteredProjekcije[it].distributer + '</td>' +
 								'<td>' + filteredProjekcije[it].cenaKarte + '</td>' +
 							'</tr>'
 					)
@@ -96,12 +91,6 @@ $(document).ready(function() {
 		return false;
 	});
 	vremePrikazivanjaOdFilterInput.on('keyup', function(event) {
-		getProjekcije();
-
-		event.preventDefault();
-		return false;
-	});
-	distributerFilterInput.on('keyup', function(event) {
 		getProjekcije();
 
 		event.preventDefault();

@@ -21,7 +21,7 @@ import model.TipProjekcije;
 public class KartaDAO {
 	public static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	public static List<Karta> getAll(String sort) {
+	public static List<Karta> getAll() {
 		List<Karta> karte = new ArrayList<>();
 		Connection conn = ConnectionManager.getConnection();
 

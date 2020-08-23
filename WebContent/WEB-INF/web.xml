@@ -117,4 +117,24 @@
     <servlet-name>ProjekcijeServlet</servlet-name>
     <url-pattern>/ProjekcijeServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProjekcijaServlet</display-name>
+    <servlet-name>ProjekcijaServlet</servlet-name>
+    <servlet-class>bioskop.servlets.ProjekcijaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProjekcijaServlet</servlet-name>
+    <url-pattern>/ProjekcijaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>KarteServlet</display-name>
+    <servlet-name>KarteServlet</servlet-name>
+    <servlet-class>bioskop.servlets.KarteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>KarteServlet</servlet-name>
+    <url-pattern>/KarteServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
