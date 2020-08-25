@@ -165,6 +165,7 @@ public class FilmDAO {
 			
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
+			pstmt.setInt(index++, film.getId());
 			pstmt.setString(index++, film.getNaziv());
 			pstmt.setString(index++, film.getReziser());
 			pstmt.setString(index++, film.getGlumci());
@@ -174,8 +175,6 @@ public class FilmDAO {
 			pstmt.setString(index++, film.getZemljaPorekla());
 			pstmt.setInt(index++, film.getGodinaProizvodnje());
 			pstmt.setString(index++, film.getOpis());
-			pstmt.setInt(index++, film.getId());
-			
 			
 			return pstmt.executeUpdate() == 1;
 			
