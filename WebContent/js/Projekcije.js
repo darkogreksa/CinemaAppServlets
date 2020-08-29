@@ -3,10 +3,10 @@ $(document).ready(function() {
 		$.get('LogoutServlet', function(data) {
 			console.log(data);
 
-//			if (data.status == 'unauthenticated') {
-//				window.location.replace('Login.html');
-//				return;
-//			}
+			if (data.status == 'unauthenticated') {
+				window.location.replace('Login.html');
+				return;
+			}
 		});
 	
 		event.preventDefault();
@@ -59,7 +59,7 @@ $(document).ready(function() {
 				for (it in filteredProjekcije) {
 					projekcijeTable.append(
 							'<tr>' +
-								'<td><a href="Projekcija.html?id=' + filteredProjekcije[it].id + '">' + filteredProjekcije[it].film.naziv +  '</a></td>' +
+								'<td><a href="Film.html?id=' + filteredProjekcije[it].id + '">' + filteredProjekcije[it].film.naziv +  '</a></td>' +
 								'<td>' + filteredProjekcije[it].tipProjekcije.naziv + '</td>' +
 								'<td>' + filteredProjekcije[it].sala.naziv + '</td>' +
 								'<td>' + filteredProjekcije[it].vremePrikazivanja + '</td>' +

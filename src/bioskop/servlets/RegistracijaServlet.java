@@ -1,6 +1,9 @@
 package bioskop.servlets;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -31,7 +34,13 @@ public class RegistracijaServlet extends HttpServlet {
 			if ("".equals(password))
 				throw new Exception("Lozinka je prazna!");
 			
-			Korisnik korisnik = new Korisnik(username, password, model.Korisnik.Role.USER);
+			LocalDateTime now = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String formatDateTime = now.format(formatter);
+			System.out.println(formatter);
+			Date datumRegistracije = new Date(KorisnikDAO.DATETIME_FORMAT.parse(formatDateTime).getTime());
+			
+			Korisnik korisnik = new Korisnik(username, password, datumRegistracije, model.Korisnik.Role.USER);
 			KorisnikDAO.dodajKorisnika(korisnik);
 
 //			response.sendRedirect("./Login.html");

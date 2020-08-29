@@ -29,7 +29,7 @@ public class KartaDAO {
 		ResultSet rset = null;
 
 		try {
-			String query = "SELECT film.id, film.naziv, projekcija.id, projekcija.vremePrikazivanja, tipProjekcije.naziv, sala.naziv, karta.id, karta.sediste_id, karta.username\r\n" + 
+			String query = "SELECT film.id, film.naziv, projekcija.id, projekcija.vremePrikazivanja, tipProjekcije.naziv, sala.naziv, karta.id, karta.sediste_redniBroj, karta.username\r\n" + 
 					"FROM karta\r\n" + 
 					"LEFT JOIN projekcija ON projekcija.id = karta.projekcija_id\r\n" + 
 					"LEFT JOIN film ON film.id = projekcija.film_id\r\n" + 

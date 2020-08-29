@@ -155,7 +155,7 @@ public class FilmDAO {
 		}	
 	}
 	
-	public static boolean izmeniFilm(Film film) {
+	public static boolean izmeniFilm(Film film) throws Exception {
 		Connection conn = ConnectionManager.getConnection();
 		
 		PreparedStatement pstmt = null;
@@ -177,15 +177,10 @@ public class FilmDAO {
 			pstmt.setString(index++, film.getOpis());
 			
 			return pstmt.executeUpdate() == 1;
-			
-		}  catch (Exception e) {
-			System.out.println("Greska u SQL upitu!");
-			e.printStackTrace();
-		}finally {
+		} finally {
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
-		return false;
 	}
 	
 	public static boolean obrisiFilm(int id) {

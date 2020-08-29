@@ -13,24 +13,25 @@ import bioskop.dao.FilmDAO;
 import bioskop.dao.KorisnikDAO;
 import model.Film;
 import model.Korisnik;
+import model.Korisnik.Role;
 
 @SuppressWarnings("serial")
 public class FilmServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
-//		if (loggedInUserName == null) {
-////			response.sendRedirect("./Login.html");
-//			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-//			return;
-//		}
+		String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
+		if (loggedInUserName == null) {
+//			response.sendRedirect("./Login.html");
+			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+			return;
+		}
 		try {
-//			Korisnik loggedInUser = KorisnikDAO.get(loggedInUserName);
-//			if (loggedInUser == null) {
-//				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-//				return;
-//			}
+			Korisnik loggedInUser = KorisnikDAO.get(loggedInUserName);
+			if (loggedInUser == null) {
+				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+				return;
+			}
 			
 			int id = Integer.parseInt(request.getParameter("id"));
 			Film film = FilmDAO.get(id);
@@ -47,23 +48,23 @@ public class FilmServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//	String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
-//	if (loggedInUserName == null) {
-////		response.sendRedirect("./Login.html");
-//		request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-//		return;
-//	}
+	String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
+	if (loggedInUserName == null) {
+//		response.sendRedirect("./Login.html");
+		request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+		return;
+	}
 	try {
-//		User loggedInUser = UserDAO.get(loggedInUserName);
-//		if (loggedInUser == null) {
-//			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-//			return;
-//		}
-//		if (loggedInUser.getRole() != Role.ADMIN) {
-////			response.sendRedirect("./WebShop.html");
-//			request.getRequestDispatcher("./UnauthorizedServlet").forward(request, response);
-//			return;
-//		}
+		Korisnik loggedInUser = KorisnikDAO.get(loggedInUserName);
+		if (loggedInUser == null) {
+			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+			return;
+		}
+		if (loggedInUser.getRole() != Role.ADMIN) {
+//			response.sendRedirect("./WebShop.html");
+			request.getRequestDispatcher("./UnauthorizedServlet").forward(request, response);
+			return;
+		}
 
 		String action = request.getParameter("action");
 		switch (action) {

@@ -1,17 +1,17 @@
 $(document).ready(function() {	
-//	$('#logoutLink').on('click', function(event) {
-//		$.get('LogoutServlet', function(data) {
-//			console.log(data);
-//
-//			if (data.status == 'unauthenticated') {
-//				window.location.replace('Login.html');
-//				return;
-//			}
-//		});
-//	
-//		event.preventDefault();
-//		return false;
-//	});
+	$('#logoutLink').on('click', function(event) {
+		$.get('LogoutServlet', function(data) {
+			console.log(data);
+
+			if (data.status == 'unauthenticated') {
+				window.location.replace('Login.html');
+				return;
+			}
+		});
+	
+		event.preventDefault();
+		return false;
+	});
 	
 	var id = window.location.search.slice(1).split('&')[0].split('=')[1];
 	console.log(id);
@@ -28,15 +28,6 @@ $(document).ready(function() {
 			if(data.status == 'success') {
 				
 				var film = data.film;
-//				$('#naziv').text(film.naziv);
-//				$('#reziser').text(film.reziser);
-//				$('#glumci').text(film.glumci);
-//				$('#zanrovi').text(film.zanrovi);
-//				$('#trajanje').text(film.trajanje);
-//				$('#distributer').text(film.distributer);
-//				$('#zemljaPorekla').text(film.zemljaPorekla);
-//				$('#godinaProizvodnje').text(film.godinaProizvodnje);
-//				$('#opis').text(film.opis);
 				
 				var nazivInput = $('#nazivInput');
 				var reziserInput = $('#reziserInput');
@@ -61,6 +52,13 @@ $(document).ready(function() {
 				$('#updateSubmit').on('click', function(event) {
 					var naziv = nameInput.val();
 					var reziser = priceInput.val();
+					var glumci = priceInput.val();
+					var zanrovi = priceInput.val();
+					var trajanje = priceInput.val();
+					var distributer = priceInput.val();
+					var zemljaPorekla = priceInput.val();
+					var godinaProizvodnje = priceInput.val();
+					var opis = priceInput.val();
 					console.log('naziv: ' + naziv);
 					console.log('reziser: ' + reziser);
 					console.log('glumci: ' + glumci);
@@ -74,18 +72,25 @@ $(document).ready(function() {
 					params = {
 						'action': 'update',
 						'id': id, 
-						'name': name, 
-						'price': price
+						'naziv': naziv, 
+						'reziser': reziser,
+						'glumci': glumci,
+						'zanrovi': zanrovi,
+						'trajanje': trajanje,
+						'distributer': distributer,
+						'zemljaPorekla': zemljaPorekla,
+						'godinaProizvodnje': godinaProizvodnje,
+						'opis': opis
 					};
 					console.log(params);
-					$.post('ProductServlet', params, function(data) {
+					$.post('FilmServlet', params, function(data) {
 						if (data.status == 'unauthenticated') {
 							window.location.replace('Login.html');
 							return;
 						}
 
 						if (data.status == 'success') {
-							window.location.replace('WebShop.html');
+							window.location.replace('Filmovi.html');
 							return;
 						}
 					});

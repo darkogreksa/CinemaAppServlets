@@ -20,18 +20,18 @@ import model.Korisnik.Role;
 public class FilmsServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
-//		if (loggedInUserName == null) {
-//			response.sendRedirect("./Login.html");
-//			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-//			return;
-//		}
+		String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
+		if (loggedInUserName == null) {
+			response.sendRedirect("./Login.html");
+			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+			return;
+		}
 		try {
-//			Korisnik loggedInUser = KorisnikDAO.get(loggedInUserName);
-//			if (loggedInUser == null) {
-//				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-//				return;
-//			}
+			Korisnik loggedInUser = KorisnikDAO.get(loggedInUserName);
+			if (loggedInUser == null) {
+				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+				return;
+			}
 			
 			String naziv = request.getParameter("nazivFilter");
 			naziv = (naziv != null? naziv: "");

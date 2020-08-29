@@ -3,10 +3,10 @@ $(document).ready(function() {
 		$.get('LogoutServlet', function(data) {
 			console.log(data);
 
-//			if (data.status == 'unauthenticated') {
-//				window.location.replace('Login.html');
-//				return;
-//			}
+			if (data.status == 'unauthenticated') {
+				window.location.replace('Login.html');
+				return;
+			}
 		});
 	
 		event.preventDefault();
@@ -35,7 +35,7 @@ $(document).ready(function() {
 				'roleFilter': roleFilter
 		};
 		
-		$.get('KorisniciServlet', params, function(data) {
+		$.get('KorisniciServlet', function(data) {
 			console.log(data);
 			
 			if (data.status == 'unauthenticated') {

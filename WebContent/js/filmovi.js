@@ -3,10 +3,10 @@ $(document).ready(function() {
 		$.get('LogoutServlet', function(data) {
 			console.log(data);
 
-//			if (data.status == 'unauthenticated') {
-//				window.location.replace('Login.html');
-//				return;
-//			}
+			if (data.status == 'unauthenticated') {
+				window.location.replace('Login.html');
+				return;
+			}
 		});
 	
 		event.preventDefault();
@@ -26,6 +26,7 @@ $(document).ready(function() {
 	var loginLink = $('#loginLink');
 	var dodajFilmLink = $('#dodajFilmLink');
 	var korisniciLink = $('#korisniciLink');
+	var karteLink = $('#karteLink');
 	var backLink = $('#backLink');
 	var adminParagraph = $('#adminParagraph');
 	var projekcijeLink = $('#projekcijeLink');

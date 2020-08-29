@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bioskop.dao.KorisnikDAO;
 import bioskop.dao.ProjekcijaDAO;
 import model.Korisnik;
 import model.Projekcija;
@@ -19,9 +20,19 @@ import model.Projekcija;
 public class ProjekcijeServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
+		if (loggedInUserName == null) {
+			response.sendRedirect("./Login.html");
+			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+			return;
+		}
 		try {
+			Korisnik loggedInUser = KorisnikDAO.get(loggedInUserName);
+			if (loggedInUser == null) {
+				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+				return;
+			}
 
-			
 			String filmFilter = request.getParameter("filmFilterInput");
 			filmFilter = (filmFilter != null ? filmFilter : "");
 

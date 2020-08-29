@@ -19,18 +19,18 @@ import model.Korisnik;
 public class KorisniciServlet extends HttpServlet {
 	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//    	String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
-//		if (loggedInUserName == null) {
-//			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-//			return;
-//		}
+    	String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
+		if (loggedInUserName == null) {
+			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+			return;
+		}
 		try {
-//			Korisnik loggedInUser = KorisnikDAO.get(loggedInUserName);
-//			if (loggedInUser == null) {
-//				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-//				return;
-//			}
-//			
+			Korisnik loggedInUser = KorisnikDAO.get(loggedInUserName);
+			if (loggedInUser == null) {
+				request.getRequestDispatcher("./LogoutServlet").forward(request, response);
+				return;
+			}
+			
 			String username = request.getParameter("usernameFilter");
 			username = (username != null? username: "");
 			String datum = request.getParameter("datumFilter");

@@ -125,7 +125,7 @@ public class KorisnikDAO {
 		return (ArrayList<Korisnik>) korisnici;
 	}
 	
-	public static boolean dodajKorisnika(Korisnik korisnik) {
+	public static boolean dodajKorisnika(Korisnik korisnik) throws Exception {
 		Connection conn = ConnectionManager.getConnection();
 		
 		PreparedStatement pstmt = null;
@@ -139,122 +139,42 @@ public class KorisnikDAO {
 			pstmt.setString(index++, korisnik.getPassword());
 			pstmt.setDate(index++, (java.sql.Date) korisnik.getDatumRegistracije());
 			pstmt.setString(index++, korisnik.getRole().toString());
+			System.out.println(pstmt);
 			
 			return pstmt.executeUpdate() == 1;
-		} catch (Exception e) {
-			System.out.println("Greska u SQL upitu.");
-			e.printStackTrace();
 		} finally {
-			try {
-				pstmt.close();
-			} catch (SQLException exc) {
-				exc.printStackTrace();
-			}
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
 		}
-		return false;
 	}
 	
-	public static boolean izmeniKorisnika(Korisnik korisnik) {
+	public static boolean izmeniKorisnika(Korisnik korisnik, String newUsername) {
 		Connection conn = ConnectionManager.getConnection();
-		
-		PreparedStatement prSt = null;
-		
+
+		PreparedStatement pstmt = null;
+
 		try {
-			String query = "UPDATE korisnik SET password = ? WHERE username = ?";
-			
-			prSt = conn.prepareStatement(query);
-			
+			String query = "UPDATE korisnik SET username = '" + newUsername +"', role = ?, password = ?, WHERE username = ?";
+
+			pstmt = conn.prepareStatement(query);
+
 			int index = 1;
-			prSt.setString(index++, korisnik.getPassword());
-			prSt.setString(index++, korisnik.getUsername());
-			
-			return prSt.executeUpdate() == 1;
-		} catch (Exception e) {
-			System.out.println("Greska u SQL upitu.");
-			e.printStackTrace();
-		} finally {
-			try {
-				prSt.close();
-			} catch (SQLException exc) {
-				exc.printStackTrace();
-			}
+			pstmt.setString(index++, korisnik.getUsername());
+			pstmt.setString(index++, korisnik.getPassword());
+			pstmt.setString(index++, korisnik.getRole().toString());
+
+			System.out.println(pstmt);
+
+			return pstmt.executeUpdate() == 1;
+		} catch (SQLException ex) {
+			System.out.println("Greska u SQL upitu!");
+			ex.printStackTrace();
+		}finally {
+			try {pstmt.close();} catch (SQLException ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		return false;
 	}
-	
-	/*public static ArrayList<Korisnik> pretraziKorisnikaPoUlozi(String korisnik) {
-		Connection conn = ConnectionManager.getConnection();
-		ArrayList<Korisnik> korisnici = new ArrayList<Korisnik>();
-		PreparedStatement prSt = null;
-		ResultSet rSet = null;
-		
-		try {
-			String query = "SELECT * FROM korisnik WHERE role LIKE ?";
-			prSt = conn.prepareStatement(query);
-			prSt.setString(1, "%" + korisnik + "%");
-			rSet = prSt.executeQuery();
-			
-			while(rSet.next()) {
-				int index = 1;
-				String username = rSet.getString(index++);
-				String password = rSet.getString(index++);
-				Date datumRegistracije = rSet.getDate(index++);
-				String dRegistracije = dateToString(datumRegistracije);
-				Role role = Role.valueOf(rSet.getString(index++));
-				
-				Korisnik k = new Korisnik(username, password, dRegistracije, role);
-				
-				korisnici.add(k);
-			}
-		} catch (Exception e) {
-			System.out.println("Greska u SQL upitu.");
-			e.printStackTrace();
-		} finally {
-			try {
-				prSt.close();
-			} catch (SQLException exc) {
-				exc.printStackTrace();
-			}
-		}
-		return korisnici;
-	}
-	
-	public static ArrayList<Korisnik> pretraziKorisnikaPoUsername(String korisnik) {
-		Connection conn = ConnectionManager.getConnection();
-		ArrayList<Korisnik> korisnici = new ArrayList<Korisnik>();
-		PreparedStatement prSt = null;
-		ResultSet rSet = null;
-		
-		try {
-			String query = "SELECT * FROM korisnik WHERE username LIKE ?";
-			prSt = conn.prepareStatement(query);
-			prSt.setString(1, "%" + korisnik + "%");
-			rSet = prSt.executeQuery();
-			
-			while(rSet.next()) {
-				int index = 1;
-				String username = rSet.getString(index++);
-				String password = rSet.getString(index++);
-				Date datumRegistracije = rSet.getDate(index++);
-				String dRegistracije = dateToString(datumRegistracije);
-				Role role = Role.valueOf(rSet.getString(index++));
-				
-				Korisnik k = new Korisnik(username, password, dRegistracije, role);
-				
-				korisnici.add(k);
-			}
-		} catch (Exception e) {
-			System.out.println("Greska u SQL upitu.");
-			e.printStackTrace();
-		} finally {
-			try {
-				prSt.close();
-			} catch (SQLException exc) {
-				exc.printStackTrace();
-			}
-		}
-		return korisnici;
-	}*/
 	
 	public static boolean obrisiKorisnika(String username) {
 		Connection conn = ConnectionManager.getConnection();
@@ -266,15 +186,11 @@ public class KorisnikDAO {
 			pstmt.setString(1, username);
 			
 			return pstmt.executeUpdate() == 1;
-		} catch (Exception e) {
-			System.out.println("Greska u SQL upitu.");
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
-			try {
-				pstmt.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		return false;
 	}
