@@ -35,9 +35,9 @@ public class LoginServlet extends HttpServlet {
 			}
 	
 			request.getSession().setAttribute("loggedInUserName", korisnik.getUsername());
-			request.getSession().setAttribute("data", korisnik.getUsername());
+			request.getSession().setAttribute("loggedInRegisterDate", korisnik.getDatumRegistracije());
+			request.getSession().setAttribute("loggedInUserRole", korisnik.getRole());
 			
-//			response.sendRedirect("./WebShopServlet");
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);
 		} catch (Exception ex) {
 			ex.printStackTrace();

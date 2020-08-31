@@ -36,7 +36,15 @@ public class KorisnikServlet extends HttpServlet {
 			Korisnik korisnik = KorisnikDAO.get(username);
 
 			Map<String, Object> data = new LinkedHashMap<>();
-			data.put("korisnik", korisnik);
+//			data.put("korisnik", korisnik);
+
+			String action = request.getParameter("action");
+			switch (action) {
+				case "loggedInUserRole": {
+					data.put("loggedInUserRole", loggedInUser.getRole());
+					break;
+				}
+			}
 
 			request.setAttribute("data", data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);	
