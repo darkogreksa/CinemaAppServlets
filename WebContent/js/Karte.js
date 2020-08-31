@@ -60,12 +60,12 @@ $(document).ready(function() {
 				for (it in filteredKarte) {
 					karteTable.append(
 							'<tr>' +
-								'<td>' + filteredKarte[it].film.naziv + '</td>' +
-								'<td><a href="Karta.html?id=' + filteredKarte[it].id + '">' + filteredKarte[it].sediste +  '</a></td>' +
-								'<td><a href="Projekcija.html?id=' + filteredKarte[it].id + '">' + filteredKarte[it].vremeProdaje +  '</a></td>' +
+								'<td>' + filteredKarte[it].projekcija.film.naziv + '</td>' +
+								'<td><a href="Karta.html?id=' + filteredKarte[it].id + '">' + filteredKarte[it].sediste.redniBroj +  '</a></td>' +
+								'<td><a href="Projekcija.html?id=' + filteredKarte[it].id + '">' + filteredKarte[it].projekcija.vremePrikazivanja +  '</a></td>' +
 								'<td><a href="Korisnik.html?username=' + filteredKarte[it].username + '">' + filteredKarte[it].korisnik.username +  '</a></td>' +
-								'<td>' + filteredKarte[it].sala.naziv + '</td>' +
-								'<td>' + filteredKarte[it].tipProjekcije.naziv + '</td>' +
+								'<td>' + filteredKarte[it].projekcija.sala.naziv + '</td>' +
+								'<td>' + filteredKarte[it].projekcija.tipProjekcije.naziv + '</td>' +
 							'</tr>'
 					)
 				}

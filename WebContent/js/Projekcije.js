@@ -20,8 +20,16 @@ $(document).ready(function() {
 	var cenaOdFilterInput = $('#cenaOdFilterInput');
 	var cenaDoFilterInput = $('#cenaDoFilterInput');
 
-	
 	var projekcijeTable = $('#projekcijeTable');
+	var loginLink = $('#loginLink');
+	var logoutLink = $('#logoutLink');
+	var karteLink = $('#karteLink');
+	var filmoviLink = $('#filmoviLink');
+	var korisnikLink = $('#korisnikLink');
+	var adminParagraph = $('#adminParagraph');
+	var izvestajLink = $('#izvestajLink');
+	var korisniciLink = $('#korisniciLink');
+	var dodajProjekcijuLink = $('#dodajProjekcijuLink');
 	
 	function getProjekcije() {
 		var filmFilter = filmFilterInput.val();
@@ -71,6 +79,27 @@ $(document).ready(function() {
 		});
 	}
 	
+	function getAdminInterface() {
+		$.get('KorisnikServlet', {'action': 'loggedInUserRole'}, function(data) {
+			console.log(data);
+
+			if (data.status == 'unauthenticated') {
+				window.location.replace('Login.html');
+				return;
+			}
+
+			adminParagraph.empty();
+			if (data.status == 'success') {
+				adminParagraph.empty();
+				if (data.loggedInUserRole == 'ADMIN') {
+					$('#adminParagraph').append('<a href="Izvestaj.html" id="izvestajLink">Izvestaj</a>' +
+					 		'<a href="Korisnici.html" id="korisniciLink">Upravljanje korisnicima</a>' +
+					 		'<a href="DodajProjekciju.html" id="dodajProjekcijuLink">Dodaj projekciju</a>');
+				}
+			}
+		});
+	}
+	
 	// na svaki od ovih događaja se osvežava lista proizvoda
 	filmFilterInput.on('keyup', function(event) {
 		getProjekcije();
@@ -110,5 +139,6 @@ $(document).ready(function() {
 	});
 	
 	getProjekcije();
+	getAdminInterface();
 });
 	

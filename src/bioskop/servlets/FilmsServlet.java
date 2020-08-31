@@ -72,6 +72,7 @@ public class FilmsServlet extends HttpServlet {
 			Map<String, Object> data = new LinkedHashMap<>();
 			data.put("filteredFilms", filteredFilms);
 	
+			request.setAttribute("loggedInUserRole", loggedInUser.getRole());
 			request.setAttribute("data", data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);			
 			

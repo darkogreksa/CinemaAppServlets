@@ -58,7 +58,7 @@ $(document).ready(function() {
 			'opis': opis
 //			'obrisan': obrisan
 		};
-		$.post('FilmsServlet', params, function(data) {
+		$.post('FilmServlet', params, function(data) {
 			console.log(data);
 
 			if (data.status == 'unauthenticated') {

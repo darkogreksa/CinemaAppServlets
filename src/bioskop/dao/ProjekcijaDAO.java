@@ -64,7 +64,7 @@ public class ProjekcijaDAO {
 				
 				Double cenaKarte = rset.getDouble(index++);
 				
-				Date vreme = rset.getDate(index++);
+				java.sql.Date vreme = rset.getDate(index++);
 				Timestamp vremePrikazivanja = new Timestamp(vreme.getTime());
 				
 				Integer obrisan = rset.getInt(index++);
@@ -130,7 +130,6 @@ public class ProjekcijaDAO {
 		ResultSet rset = null;
 
 		try {
-			//pisi velikim slovima querije! by dimi
 			String query = "SELECT projekcija.id, projekcija.cenaKarte, projekcija.vremePrikazivanja, projekcija.obrisan, film.id, film.naziv, tipProjekcije.id, tipProjekcije.naziv, sala.id, sala.naziv, korisnik.username\n" + 
 					"FROM projekcija\n" + 
 					"JOIN film ON film.id = projekcija.film_id\n" + 
@@ -159,7 +158,7 @@ public class ProjekcijaDAO {
 				String nazivSale = rset.getString(index++);
 				Sala sala = new Sala(idSale, nazivSale);
 				
-				Date vreme = rset.getDate(index++);
+				java.sql.Date vreme = rset.getDate(index++);
 				Timestamp vremePrikazivanja = new Timestamp(vreme.getTime());
 				
 				Double cenaKarte = rset.getDouble(index++);

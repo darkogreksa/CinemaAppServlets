@@ -20,6 +20,7 @@ public class SuccessServlet extends HttpServlet {
 		if (data == null)
 			 data = new LinkedHashMap<>();
 
+		System.out.println("data" + data);
 		data.put("status", "success");
 
 		ObjectMapper objectMapper = new ObjectMapper();

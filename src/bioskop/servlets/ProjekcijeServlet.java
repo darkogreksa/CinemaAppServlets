@@ -22,7 +22,7 @@ public class ProjekcijeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
 		if (loggedInUserName == null) {
-			response.sendRedirect("./Login.html");
+//			response.sendRedirect("./Login.html");
 			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
 			return;
 		}
@@ -63,6 +63,7 @@ public class ProjekcijeServlet extends HttpServlet {
 			Map<String, Object> data = new LinkedHashMap<>();
 			data.put("filteredProjekcije", filteredProjekcije);
 	
+			request.setAttribute("loggedInUserRole", loggedInUser.getRole());
 			request.setAttribute("data", data);
 			System.out.println("data " +  data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);			

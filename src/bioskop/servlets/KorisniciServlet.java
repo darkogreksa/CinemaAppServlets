@@ -42,6 +42,7 @@ public class KorisniciServlet extends HttpServlet {
 			Map<String, Object> data = new LinkedHashMap<>();
 			data.put("filteredKorisnici", filteredKorisnici);
 	
+			request.setAttribute("loggedInUserRole", loggedInUser.getRole());
 			request.setAttribute("data", data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);			
 			
