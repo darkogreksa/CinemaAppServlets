@@ -80,7 +80,7 @@ $(document).ready(function() {
 	}
 	
 	function getAdminInterface() {
-		$.get('KorisnikServlet', {'action': 'loggedInUserRole'}, function(data) {
+		$.get('UserServlet', {'action': 'loggedInUserRole'}, function(data) {
 			console.log(data);
 
 			if (data.status == 'unauthenticated') {
@@ -92,8 +92,8 @@ $(document).ready(function() {
 			if (data.status == 'success') {
 				adminParagraph.empty();
 				if (data.loggedInUserRole == 'ADMIN') {
-					$('#adminParagraph').append('<a href="Izvestaj.html" id="izvestajLink">Izvestaj</a>' +
-					 		'<a href="Korisnici.html" id="korisniciLink">Upravljanje korisnicima</a>' +
+					$('#adminParagraph').append('<a href="Izvestaj.html" id="izvestajLink">Izvestaj</a>\n' +
+					 		'<a href="Korisnici.html" id="korisniciLink">Upravljanje korisnicima</a>\n' +
 					 		'<a href="DodajProjekciju.html" id="dodajProjekcijuLink">Dodaj projekciju</a>');
 				}
 			}

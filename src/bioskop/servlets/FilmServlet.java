@@ -39,6 +39,7 @@ public class FilmServlet extends HttpServlet {
 			Map<String, Object> data = new LinkedHashMap<>();
 			data.put("film", film);
 
+			request.setAttribute("loggedInUserRole", loggedInUser.getRole());
 			request.setAttribute("data", data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);	
 		} catch (Exception e) {
@@ -98,7 +99,7 @@ public class FilmServlet extends HttpServlet {
 				String opis = request.getParameter("opis");
 				opis = (!"".equals(opis)? opis: "<prazan opis>");
 				
-				int obrisan = 0;
+				int obrisan = Integer.parseInt(request.getParameter("obrisan"));
 
 				Film film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, obrisan);
 				FilmDAO.dodajFilm(film);

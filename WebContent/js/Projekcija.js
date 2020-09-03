@@ -13,6 +13,8 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	var projekcijaTable = $('#projekcijaTable');
+	
 	var id = window.location.search.slice(1).split('&')[0].split('=')[1];
 	console.log(id);
 	
@@ -29,9 +31,9 @@ $(document).ready(function() {
 				
 				var projekcija = data.projekcija;
 				
-				$('#film').text(projekcija.film);
-				$('#tipProjekcije').text(projekcija.tipProjekcije);
-				$('#sala').text(projekcija.sala);
+				$('#film').text(projekcija.film.naziv);
+				$('#tipProjekcije').text(projekcija.tipProjekcije.naziv);
+				$('#sala').text(projekcija.sala.naziv);
 				$('#vremePrikazivanja').text(projekcija.vremePrikazivanja);
 				$('#cenaKarte').text(projekcija.cenaKarte);
 				
@@ -41,7 +43,7 @@ $(document).ready(function() {
 						'id': id, 
 					};
 					console.log(params);
-					$.post('ProjekcijaServlet', params, function(data) {
+					$.post('ProjekcijaServlet', function(data) {
 						if (data.status == 'unauthenticated') {
 							window.location.replace('Login.html');
 							return;

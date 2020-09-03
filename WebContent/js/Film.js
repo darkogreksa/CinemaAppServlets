@@ -16,6 +16,7 @@ $(document).ready(function() {
 	var id = window.location.search.slice(1).split('&')[0].split('=')[1];
 	console.log(id);
 	
+	var adminForm = $('#adminForm');
 	
 	function getFilm() {
 		$.get('FilmServlet', {'id': id}, function(data) {
@@ -122,5 +123,22 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	function getAdminInterface() {
+		$.get('UserServlet', {'action': 'loggedInUserRole'}, function(data) {
+			console.log(data);
+
+			if (data.status == 'unauthenticated') {
+				window.location.replace('Login.html');
+				return;
+			}
+			if (data.status == 'success') {
+				if (data.loggedInUserRole != 'ADMIN') {
+					$('#adminForm').hide();
+				}
+			}
+		});
+	}
 	getFilm()
+	getAdminInterface()
 });

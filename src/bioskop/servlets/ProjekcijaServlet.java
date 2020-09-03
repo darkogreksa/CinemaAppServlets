@@ -37,6 +37,7 @@ public class ProjekcijaServlet extends HttpServlet {
 			Map<String, Object> data = new LinkedHashMap<>();
 			data.put("projekcija", projekcija);
 			
+			request.setAttribute("loggedInUserRole", loggedInUser.getRole());
 			request.setAttribute("data", data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);
 		} catch (Exception e) {

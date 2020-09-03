@@ -16,6 +16,7 @@ $(document).ready(function() {
 	var username = window.location.search.slice(1).split('&')[0].split('=')[1];
 	console.log(username);
 	
+	var adminForm = $('#adminForm');
 	
 	function getKorisnik() {
 		$.get('KorisnikServlet', {'username': username}, function(data) {
@@ -26,13 +27,14 @@ $(document).ready(function() {
 				return;
 			}
 			if(data.status == 'success') {
-				var usernameInput = $('#usernameInput');
-				usernameInput.val(korisnik.username);
-				
 				var korisnik = data.korisnik;
-//				$('#username').text(korisnik.username);
-				$('#datumRegistracije').text(korisnik.datumRegistracije);
-				$('#role').text(korisnik.role);
+				
+				var usernameInput = $('#usernameInput');
+				var datumRegistracijeInput = $('#datumRegistracijeInput');
+				var roleInput = $('#roleInput');
+				usernameInput.val(korisnik.username);
+				datumRegistracijeInput.val(korisnik.datumRegistracije);
+				roleInput.val(korisnik.role);
 				
 				$('#updateSubmit').on('click', function(event) {
 					var username = usernameInput.val();
@@ -61,7 +63,7 @@ $(document).ready(function() {
 				$('#deleteSubmit').on('click', function(event) {
 					params = {
 						'action': 'delete',
-						'username': username, 
+						'username': username
 					};
 					console.log(params);
 					$.post('KorisnikServlet', params, function(data) {
@@ -82,5 +84,22 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	function getAdminInterface() {
+		$.get('UserServlet', {'action': 'loggedInUserRole'}, function(data) {
+			console.log(data);
+
+			if (data.status == 'unauthenticated') {
+				window.location.replace('Login.html');
+				return;
+			}
+			if (data.status == 'success') {
+				if (data.loggedInUserRole != 'ADMIN') {
+					$('#adminForm').hide();
+				}
+			}
+		});
+	}
 	getKorisnik()
+	getAdminInterface()
 });

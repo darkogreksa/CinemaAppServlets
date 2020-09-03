@@ -9,11 +9,17 @@
 <body>
 	<h3>Korisnik</h3>
 	<table id="korisnikTable">
-		<tr><td align="right">Korisnicko ime:</td><td><input type="text" id="usernameInput"/></td></tr>
-		<tr><td align="right"><b>Datum registracije:</b></td><td id="datumRegistracije"></td></tr>
-		<tr><td align="right"><b>Uloga:</b></td><td id="role"></td></tr>
-		<tr><td/><td><input type="submit" value="Izmeni" id="updateSubmit"></td></tr>
-		<tr><td/><td><input type="submit" value="Obrisi" id="deleteSubmit"></td></tr>
+		<tr><td align="right">Korisničko ime:</td><td><input type="text" id="usernameInput"/></td></tr>
+		<tr><td align="right">Datum registracije:</td><td><input type="text" id="datumRegistracijeInput"/></td></tr>
+		<tr><td align="right">Uloga:</td><td><input type="text" id="roleInput"/></td></tr>
 	</table>
+	<form id="adminForm">
+		<table>
+			<tr><td/><td><input type="submit" value="Izmeni" id="updateSubmit"></td></tr>
+			<tr><td/><td><input type="submit" value="Obrisi" id="deleteSubmit"></td></tr>
+		</table>
+	</form>
+	<p><a href="Korisnici.html">Nazad</a></p>
+	<p><a href="" id="logoutLink">Odjavi se</a></p>
 </body>
 </html>

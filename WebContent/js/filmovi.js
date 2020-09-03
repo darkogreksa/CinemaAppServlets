@@ -87,7 +87,7 @@ $(document).ready(function() {
 	}
 	
 	function getAdminInterface() {
-		$.get('KorisnikServlet', {'action': 'loggedInUserRole'}, function(data) {
+		$.get('UserServlet', {'action': 'loggedInUserRole'}, function(data) {
 			console.log(data);
 
 			if (data.status == 'unauthenticated') {

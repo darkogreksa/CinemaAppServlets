@@ -65,7 +65,6 @@ public class ProjekcijeServlet extends HttpServlet {
 	
 			request.setAttribute("loggedInUserRole", loggedInUser.getRole());
 			request.setAttribute("data", data);
-			System.out.println("data " +  data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);			
 			
 		} catch (Exception ex) {

@@ -181,17 +181,14 @@ public class KorisnikDAO {
 		
 		PreparedStatement pstmt = null;
 		try {
-			String query = "DELETE * FROM korisnik WHERE username = ?";
+			String query = "DELETE FROM korisnik WHERE username = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, username);
 			
 			return pstmt.executeUpdate() == 1;
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally {
-			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
-			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
-		}
+		} 
 		return false;
 	}
 

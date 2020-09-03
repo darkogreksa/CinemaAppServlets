@@ -3,10 +3,10 @@ $(document).ready(function() {
 		$.get('LogoutServlet', function(data) {
 			console.log(data);
 
-//			if (data.status == 'unauthenticated') {
-//				window.location.replace('Login.html');
-//				return;
-//			}
+			if (data.status == 'unauthenticated') {
+				window.location.replace('Login.html');
+				return;
+			}
 		});
 	
 		event.preventDefault();
@@ -33,7 +33,7 @@ $(document).ready(function() {
 		var zemljaPorekla = zemljaPoreklaInput.val();
 		var godinaProizvodnje = godinaProizvodnjeInput.val();
 		var opis = opisInput.val();
-//		var obrisan = 0;
+		var obrisan = 0;
 		console.log('naziv: ' + naziv);
 		console.log('reziser: ' + reziser);
 		console.log('glumci: ' + glumci);
@@ -43,7 +43,7 @@ $(document).ready(function() {
 		console.log('zemljaPorekla: ' + zemljaPorekla);
 		console.log('godinaProizvodnje: ' + godinaProizvodnje);
 		console.log('opis: ' + opis);
-//		console.log('obrisan: ' + obrisan);
+		console.log('obrisan: ' + obrisan);
 
 		params = {
 			'action': 'add', 
@@ -55,8 +55,8 @@ $(document).ready(function() {
 			'distributer': distributer,
 			'zemljaPorekla': zemljaPorekla,
 			'godinaProizvodnje': godinaProizvodnje,
-			'opis': opis
-//			'obrisan': obrisan
+			'opis': opis,
+			'obrisan': obrisan
 		};
 		$.post('FilmServlet', params, function(data) {
 			console.log(data);
