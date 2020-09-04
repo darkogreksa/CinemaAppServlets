@@ -99,9 +99,9 @@ public class FilmServlet extends HttpServlet {
 				String opis = request.getParameter("opis");
 				opis = (!"".equals(opis)? opis: "<prazan opis>");
 				
-				int obrisan = Integer.parseInt(request.getParameter("obrisan"));
+				int obrisan = 0;
 
-				Film film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, obrisan);
+				Film film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis);
 				FilmDAO.dodajFilm(film);
 				break;
 			}

@@ -65,7 +65,6 @@ public class ProjekcijaDAO {
 				Double cenaKarte = rset.getDouble(index++);
 				
 				java.sql.Date vreme = rset.getDate(index++);
-				Timestamp vremePrikazivanja = new Timestamp(vreme.getTime());
 				
 				Integer obrisan = rset.getInt(index++);
 
@@ -84,7 +83,7 @@ public class ProjekcijaDAO {
 				String username = rset.getString(index++);
 				Korisnik korisnik = new Korisnik(username);
 						
-				Projekcija projekcija = new Projekcija(id, film, tipProjekcijee, salaa, vremePrikazivanja, cenaKarte, korisnik, obrisan);
+				Projekcija projekcija = new Projekcija(id, film, tipProjekcijee, salaa, vreme, cenaKarte, korisnik, obrisan);
 				projekcije.add(projekcija);
 				
 			}
@@ -146,6 +145,10 @@ public class ProjekcijaDAO {
 			if (rset.next()) {
 				int index = 2;
 				
+				Double cenaKarte = rset.getDouble(index++);
+				
+				java.sql.Date vreme = rset.getDate(index++);
+			
 				Integer idFilma = rset.getInt(index++);
 				String nazivFilma = rset.getString(index++);
 				Film film = new Film(idFilma, nazivFilma);
@@ -158,17 +161,12 @@ public class ProjekcijaDAO {
 				String nazivSale = rset.getString(index++);
 				Sala sala = new Sala(idSale, nazivSale);
 				
-				java.sql.Date vreme = rset.getDate(index++);
-				Timestamp vremePrikazivanja = new Timestamp(vreme.getTime());
-				
-				Double cenaKarte = rset.getDouble(index++);
-								
 				String username = rset.getString(index++);
 				Korisnik korisnik = new Korisnik(username);
 				
 				Integer obrisan = rset.getInt(index++);
 						
-				Projekcija projekcija = new Projekcija(id, film, tipProjekcije, sala, vremePrikazivanja, cenaKarte, korisnik, obrisan);
+				Projekcija projekcija = new Projekcija(id, film, tipProjekcije, sala, vreme, cenaKarte, korisnik, obrisan);
 				return projekcija;
 			}
 		} catch (SQLException ex) {
@@ -197,7 +195,7 @@ public class ProjekcijaDAO {
 			int index = 1;
 			pstmt.setInt(index++, projekcija.getTipProjekcije().getId());
 			pstmt.setInt(index++, projekcija.getSala().getId());
-			pstmt.setTimestamp(index++, projekcija.getVremePrikazivanja());
+			pstmt.setDate(index++, (java.sql.Date) projekcija.getVremePrikazivanja());
 			pstmt.setDouble(index++, projekcija.getCenaKarte());
 			pstmt.setString(index++, projekcija.getAdministrator().getUsername());
 			pstmt.setInt(index++, projekcija.getFilm().getId());

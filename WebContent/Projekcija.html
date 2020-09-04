@@ -9,21 +9,16 @@
 <body>
 	<h3>Projekcija</h3>
 	<table border="1" id="projekcijaTable">
-		<tr bgcolor="lightgrey">
-			<th>Film</th>
-			<th>Tip projekcije</th>
-			<th>Sala</th>
-			<th>Vreme prikazivanja</th>
-			<th>Cena karte(RSD)</th>
-		</tr>
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr><td/><td><input type="submit" value="Obrisi" id="deleteSubmit"></td></tr>
+		<tr><td align="right"><b>Naziv filma:</b></td><td id="nazivFilma"></td></tr>
+		<tr><td align="right"><b>Tip projekcije:</b></td><td id="tipProjekcije"></td></tr>
+		<tr><td align="right"><b>Sala:</b></td><td id="sala"></td></tr>
+		<tr><td align="right"><b>Vreme prikazivanja:</b></td><td id="vremePrikazivanja"></td></tr>
+		<tr><td align="right"><b>Cena karte(RSD):</b></td><td id="cenaKarte"></td></tr>
 	</table>
+	<form id="adminForm">
+		<table>
+			<tr><td/><td><input type="submit" value="Obrisi" id="deleteSubmit"></td></tr>
+		</table>
+	</form>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class Projekcija {
 	
@@ -8,12 +9,12 @@ public class Projekcija {
 	private Film film;
 	private TipProjekcije tipProjekcije;
 	private Sala sala;
-	private Timestamp vremePrikazivanja;
+	private Date vremePrikazivanja;
 	private double cenaKarte;
 	private Korisnik administrator;
 	private int obrisan;
 	
-	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Timestamp vremePrikazivanja,
+	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Date vremePrikazivanja,
 			double cenaKarte, Korisnik administrator, int obrisan) {
 		super();
 		this.id = id;
@@ -26,7 +27,7 @@ public class Projekcija {
 		this.obrisan = obrisan;
 	}
 	
-	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Timestamp vremePrikazivanja) {
+	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Date vremePrikazivanja) {
 		super();
 		this.id = id;
 		this.film = film;
@@ -76,11 +77,11 @@ public class Projekcija {
 		this.sala = sala;
 	}
 
-	public Timestamp getVremePrikazivanja() {
+	public Date getVremePrikazivanja() {
 		return vremePrikazivanja;
 	}
 
-	public void setVremePrikazivanja(Timestamp vremePrikazivanja) {
+	public void setVremePrikazivanja(Date vremePrikazivanja) {
 		this.vremePrikazivanja = vremePrikazivanja;
 	}
 

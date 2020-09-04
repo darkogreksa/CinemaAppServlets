@@ -133,8 +133,8 @@ public class FilmDAO {
 		
 		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO film (naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, obrisan)"
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO film (naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis)"
+					+ "VALUES (?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			pstmt.setString(index++, film.getNaziv());
@@ -146,7 +146,6 @@ public class FilmDAO {
 			pstmt.setString(index++, film.getZemljaPorekla());
 			pstmt.setInt(index++, film.getGodinaProizvodnje());
 			pstmt.setString(index++, film.getOpis());
-			pstmt.setInt(index++, 0);
 			
 			return pstmt.executeUpdate() == 1;
 		

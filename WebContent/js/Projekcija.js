@@ -13,7 +13,7 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	var projekcijaTable = $('#projekcijaTable');
+//	var projekcijaTable = $('#projekcijaTable');
 	
 	var id = window.location.search.slice(1).split('&')[0].split('=')[1];
 	console.log(id);
@@ -31,7 +31,7 @@ $(document).ready(function() {
 				
 				var projekcija = data.projekcija;
 				
-				$('#film').text(projekcija.film.naziv);
+				$('#nazivFilma').text(projekcija.film.naziv);
 				$('#tipProjekcije').text(projekcija.tipProjekcije.naziv);
 				$('#sala').text(projekcija.sala.naziv);
 				$('#vremePrikazivanja').text(projekcija.vremePrikazivanja);
@@ -43,7 +43,7 @@ $(document).ready(function() {
 						'id': id, 
 					};
 					console.log(params);
-					$.post('ProjekcijaServlet', function(data) {
+					$.post('ProjekcijaServlet', params, function(data) {
 						if (data.status == 'unauthenticated') {
 							window.location.replace('Login.html');
 							return;
@@ -61,5 +61,23 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	function getAdminInterface() {
+		$.get('UserServlet', {'action': 'loggedInUserRole'}, function(data) {
+			console.log(data);
+
+			if (data.status == 'unauthenticated') {
+				window.location.replace('Login.html');
+				return;
+			}
+			if (data.status == 'success') {
+				if (data.loggedInUserRole != 'ADMIN') {
+					$('#adminForm').hide();
+				}
+			}
+		});
+	}
+	
 	getProjekcija()
+	getAdminInterface()
 });
