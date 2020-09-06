@@ -33,7 +33,6 @@ $(document).ready(function() {
 		var zemljaPorekla = zemljaPoreklaInput.val();
 		var godinaProizvodnje = godinaProizvodnjeInput.val();
 		var opis = opisInput.val();
-		var obrisan = 0;
 		console.log('naziv: ' + naziv);
 		console.log('reziser: ' + reziser);
 		console.log('glumci: ' + glumci);
@@ -43,7 +42,6 @@ $(document).ready(function() {
 		console.log('zemljaPorekla: ' + zemljaPorekla);
 		console.log('godinaProizvodnje: ' + godinaProizvodnje);
 		console.log('opis: ' + opis);
-		console.log('obrisan: ' + obrisan);
 
 		params = {
 			'action': 'add', 
@@ -55,8 +53,7 @@ $(document).ready(function() {
 			'distributer': distributer,
 			'zemljaPorekla': zemljaPorekla,
 			'godinaProizvodnje': godinaProizvodnje,
-			'opis': opis,
-			'obrisan': obrisan
+			'opis': opis
 		};
 		$.post('FilmServlet', params, function(data) {
 			console.log(data);

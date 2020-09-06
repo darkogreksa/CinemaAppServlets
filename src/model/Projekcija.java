@@ -9,12 +9,12 @@ public class Projekcija {
 	private Film film;
 	private TipProjekcije tipProjekcije;
 	private Sala sala;
-	private Date vremePrikazivanja;
+	private String vremePrikazivanja;
 	private double cenaKarte;
 	private Korisnik administrator;
 	private int obrisan;
 	
-	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Date vremePrikazivanja,
+	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, String vremePrikazivanja,
 			double cenaKarte, Korisnik administrator, int obrisan) {
 		super();
 		this.id = id;
@@ -27,7 +27,7 @@ public class Projekcija {
 		this.obrisan = obrisan;
 	}
 	
-	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Date vremePrikazivanja) {
+	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, String vremePrikazivanja) {
 		super();
 		this.id = id;
 		this.film = film;
@@ -77,11 +77,11 @@ public class Projekcija {
 		this.sala = sala;
 	}
 
-	public Date getVremePrikazivanja() {
+	public String getVremePrikazivanja() {
 		return vremePrikazivanja;
 	}
 
-	public void setVremePrikazivanja(Date vremePrikazivanja) {
+	public void setVremePrikazivanja(String vremePrikazivanja) {
 		this.vremePrikazivanja = vremePrikazivanja;
 	}
 

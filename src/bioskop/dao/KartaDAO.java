@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +50,9 @@ public class KartaDAO {
 				Film film = new Film(idFilma, nazivFilma);
 				
 				int idd = rset.getInt(index++);
+				
 				Date vremePrikazivanjaa = rset.getDate(index++);
-				Timestamp vremePrikazivanja = new Timestamp(vremePrikazivanjaa.getTime());			
+				String vremePrikazivanja = dateToString(vremePrikazivanjaa);			
 				
 				String tipProjekcijeNaziv = rset.getString(index++);
 				TipProjekcije tipProjekcije = new TipProjekcije(tipProjekcijeNaziv);
@@ -111,7 +114,7 @@ public class KartaDAO {
 				Sediste sedistee = new Sediste(sediste);
 				
 				Date datumKarte = rset.getDate(index++);
-				Timestamp kartaDatum = new Timestamp(datumKarte.getTime());
+				String kartaDatum = dateToString(datumKarte);
 				
 				String username = rset.getString(index++);
 				Korisnik korisnik = new Korisnik(username);
@@ -162,8 +165,9 @@ public class KartaDAO {
 				Film film = new Film(idFilma, nazivFilma);
 				
 				int idd = rset.getInt(index++);
+				
 				Date vremePrikazivanjaa = rset.getDate(index++);
-				Timestamp vremePrikazivanja = new Timestamp(vremePrikazivanjaa.getTime());			
+				String vremePrikazivanja = dateToString(vremePrikazivanjaa);
 				
 				String tipProjekcijeNaziv = rset.getString(index++);
 				TipProjekcije tipProjekcije = new TipProjekcije(tipProjekcijeNaziv);
@@ -210,7 +214,9 @@ public class KartaDAO {
 			int index = 1;
 			pstmt.setInt(index++, karta.getProjekcija().getId());
 			pstmt.setInt(index++, karta.getSediste().getRedniBroj());
-			pstmt.setTimestamp(index++, (Timestamp) karta.getVremeProdaje());
+			Date desDate=stringToDateForWrite(karta.getVremeProdaje());
+			java.sql.Date date1=new java.sql.Date(desDate.getTime());
+			pstmt.setDate(index++, date1);
 			pstmt.setString(index++, karta.getKorisnik().getUsername());
 			
 			System.out.println(pstmt);
@@ -246,5 +252,25 @@ public class KartaDAO {
 			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		}
 		return false;
+	}
+	
+	public static String dateToString(Date date) {
+		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
+		String datum;
+		datum = formatvr.format(date);
+		return datum;
+	}
+	
+	public static Date stringToDateForWrite(String datum) {
+
+		try {
+			DateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
+
+			return (Date) formatvr.parse(datum);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

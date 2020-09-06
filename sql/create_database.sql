@@ -8,9 +8,8 @@ datumRegistracije DATE NOT NULL,
 role VARCHAR(10) NOT NULL DEFAULT 'USER'
 );
 
-INSERT INTO korisnik(username, password, datumRegistracije, role) VALUES ('a', 'a', '2020-01-01 20:00:00.00', 'ADMIN');
-INSERT INTO korisnik(username, password, datumRegistracije, role) VALUES ('b', 'b', '2020-01-02 21:00:00.00', 'USER');
-
+INSERT INTO korisnik(username, password, datumRegistracije, role) VALUES ('a', 'a', '2020-01-01 20:00:00.00 ', 'ADMIN');
+INSERT INTO korisnik(username, password, datumRegistracije, role) VALUES ('b', 'b', '2020-02-02 21:00:00.00', 'USER');
 
 CREATE TABLE film (
 id INTEGER PRIMARY KEY,
@@ -63,8 +62,8 @@ CREATE TABLE sediste_sala(
     redniBroj INTEGER NOT NULL,
     sala_id INTEGER NOT NULL,
     zauzeto BIT NOT NULL,
-    FOREIGN KEY(redniBroj) REFERENCES sediste(redniBroj) ON DELETE RESTRICT,
-    FOREIGN KEY(sala_id) REFERENCES sala(id) ON DELETE RESTRICT
+    FOREIGN KEY(redniBroj) REFERENCES sediste(redniBroj) ON DELETE CASCADE,
+    FOREIGN KEY(sala_id) REFERENCES sala(id) ON DELETE CASCADE
 );
 
 INSERT INTO sediste_sala (redniBroj, sala_id,zauzeto) VALUES (1, 1, 0);
@@ -86,6 +85,8 @@ INSERT INTO sediste_sala (redniBroj, sala_id,zauzeto) VALUES (4, 3, 0);
 INSERT INTO sediste_sala (redniBroj, sala_id,zauzeto) VALUES (5, 3, 0);
 INSERT INTO sediste_sala (redniBroj, sala_id,zauzeto) VALUES (6, 3, 0);
 
+DROP TABLE projekcija;
+
 CREATE TABLE projekcija(
     id INTEGER NOT NULL PRIMARY KEY,
     tipProjekcije_id  INTEGER NOT NULL,
@@ -95,10 +96,10 @@ CREATE TABLE projekcija(
     username VARCHAR(30) NOT NULL,
     film_id INTEGER NOT NULL,
     obrisan BIT NOT NULL,
-    FOREIGN KEY(tipProjekcije_id) REFERENCES tipProjekcije(id) ON DELETE RESTRICT,
-    FOREIGN KEY(sala_id) REFERENCES sala(id) ON DELETE RESTRICT,
-    FOREIGN KEY(username) REFERENCES korisnik(username) ON DELETE RESTRICT,
-    FOREIGN KEY(film_id) REFERENCES film(id) ON DELETE RESTRICT   
+    FOREIGN KEY(tipProjekcije_id) REFERENCES tipProjekcije(id) ON DELETE CASCADE,
+    FOREIGN KEY(sala_id) REFERENCES sala(id) ON DELETE CASCADE,
+    FOREIGN KEY(username) REFERENCES korisnik(username) ON DELETE CASCADE,
+    FOREIGN KEY(film_id) REFERENCES film(id) ON DELETE CASCADE   
 );
 
 INSERT INTO projekcija (tipProjekcije_id, sala_id, vremePrikazivanja, cenaKarte, username, film_id,obrisan) VALUES (1, 1, '2020-08-10 20:00:00.00', 200.00, 'b', 1, 0);
@@ -119,3 +120,5 @@ CREATE TABLE karta(
 INSERT INTO karta(projekcija_id, sediste_redniBroj, vremeProdaje, username) VALUES (1, 1,'2020-08-10 20:00:00.00', 'b');
 INSERT INTO karta(projekcija_id, sediste_redniBroj, vremeProdaje, username) VALUES (2, 2,'2020-08-10 21:00:00.00', 'b');
 INSERT INTO karta(projekcija_id, sediste_redniBroj, vremeProdaje, username) VALUES (3, 3,'2020-08-10 22:00:00.00', 'b');
+
+SELECT * FROM projekcija;

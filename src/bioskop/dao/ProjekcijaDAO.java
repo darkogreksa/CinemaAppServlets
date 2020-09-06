@@ -1,17 +1,14 @@
 package bioskop.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 import model.Film;
@@ -21,8 +18,6 @@ import model.Sala;
 import model.TipProjekcije;
 
 public class ProjekcijaDAO {
-	public static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
 	public static List<Projekcija> getAll(String filmFilter, String tipProjekcijeFilter, String salaFilter, double cenaOdFilter, double cenaDoFilter) throws ParseException {
 
 		Connection conn = ConnectionManager.getConnection();
@@ -31,11 +26,6 @@ public class ProjekcijaDAO {
 		ResultSet rset = null;
 
 		ArrayList<Projekcija> projekcije = new ArrayList<Projekcija>();
-
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		String formatDateTime = now.format(formatter);
-		System.out.println(formatDateTime);
 	
 		try {
 			String query = "SELECT projekcija.id, projekcija.cenaKarte, projekcija.vremePrikazivanja, projekcija.obrisan, film.id, film.naziv, tipProjekcije.id, tipProjekcije.naziv, sala.id, sala.naziv, korisnik.username " + 
@@ -64,7 +54,8 @@ public class ProjekcijaDAO {
 				
 				Double cenaKarte = rset.getDouble(index++);
 				
-				java.sql.Date vreme = rset.getDate(index++);
+				Date vreme = rset.getDate(index++);
+				String vremee = dateToString(vreme);
 				
 				Integer obrisan = rset.getInt(index++);
 
@@ -83,7 +74,7 @@ public class ProjekcijaDAO {
 				String username = rset.getString(index++);
 				Korisnik korisnik = new Korisnik(username);
 						
-				Projekcija projekcija = new Projekcija(id, film, tipProjekcijee, salaa, vreme, cenaKarte, korisnik, obrisan);
+				Projekcija projekcija = new Projekcija(id, film, tipProjekcijee, salaa, vremee, cenaKarte, korisnik, obrisan);
 				projekcije.add(projekcija);
 				
 			}
@@ -147,7 +138,8 @@ public class ProjekcijaDAO {
 				
 				Double cenaKarte = rset.getDouble(index++);
 				
-				java.sql.Date vreme = rset.getDate(index++);
+				java.sql.Date vremee = rset.getDate(index++);
+				String vreme = dateToString(vremee);
 			
 				Integer idFilma = rset.getInt(index++);
 				String nazivFilma = rset.getString(index++);
@@ -195,7 +187,9 @@ public class ProjekcijaDAO {
 			int index = 1;
 			pstmt.setInt(index++, projekcija.getTipProjekcije().getId());
 			pstmt.setInt(index++, projekcija.getSala().getId());
-			pstmt.setDate(index++, (java.sql.Date) projekcija.getVremePrikazivanja());
+			Date desDate=stringToDateForWrite(projekcija.getVremePrikazivanja());
+			java.sql.Date date1=new java.sql.Date(desDate.getTime());
+			pstmt.setDate(index++, date1);
 			pstmt.setDouble(index++, projekcija.getCenaKarte());
 			pstmt.setString(index++, projekcija.getAdministrator().getUsername());
 			pstmt.setInt(index++, projekcija.getFilm().getId());
@@ -235,5 +229,47 @@ public class ProjekcijaDAO {
 			ex.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public static String dateToStringForWrite(Date date) {
+		SimpleDateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
+		String datum;
+		datum = formatvr.format(date);
+		return datum;
+	}
+	
+	public static Date stringToDateForWrite(String datum) {
+
+		try {
+			DateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
+
+			return (Date) formatvr.parse(datum);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static String dateToString(Date date) {
+		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
+		String datum;
+		datum = formatvr.format(date);
+		return datum;
+	}
+
+	public static Date stringToDate(String datum) {
+
+		try {
+			DateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
+
+			return (Date) formatvr.parse(datum);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
 	}
 }

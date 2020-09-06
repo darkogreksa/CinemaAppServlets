@@ -1,16 +1,14 @@
 package model;
 
-import java.sql.Timestamp;
-
 public class Karta {
 	
 	private int id;
 	private Projekcija projekcija;
 	private Sediste sediste;
-	private Timestamp vremeProdaje;
+	private String vremeProdaje;
 	private Korisnik korisnik;
 	
-	public Karta(int id, Projekcija projekcija, Sediste sediste, Timestamp vremeProdaje, Korisnik korisnik) {
+	public Karta(int id, Projekcija projekcija, Sediste sediste, String vremeProdaje, Korisnik korisnik) {
 		super();
 		this.id = id;
 		this.projekcija = projekcija;
@@ -51,11 +49,11 @@ public class Karta {
 		this.sediste = sediste;
 	}
 
-	public Timestamp getVremeProdaje() {
+	public String getVremeProdaje() {
 		return vremeProdaje;
 	}
 
-	public void setVremeProdaje(Timestamp vremeProdaje) {
+	public void setVremeProdaje(String vremeProdaje) {
 		this.vremeProdaje = vremeProdaje;
 	}
 

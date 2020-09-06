@@ -101,7 +101,7 @@ public class FilmServlet extends HttpServlet {
 				
 				int obrisan = 0;
 
-				Film film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis);
+				Film film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, obrisan);
 				FilmDAO.dodajFilm(film);
 				break;
 			}
