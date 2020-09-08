@@ -35,7 +35,7 @@ public class ProjekcijaDAO {
 					"JOIN sala ON sala.id = projekcija.sala_id " + 
 					"JOIN korisnik ON korisnik.username = projekcija.username " + 
 					"WHERE projekcija.cenaKarte >= ? AND projekcija.cenaKarte <= ? AND film.naziv LIKE ? AND " + 
-					"tipProjekcije.naziv LIKE ? AND sala.naziv LIKE ? AND projekcija.obrisan = 0";
+					"tipProjekcije.naziv LIKE ? AND sala.naziv LIKE ? AND projekcija.obrisan = false";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
@@ -57,7 +57,7 @@ public class ProjekcijaDAO {
 				Date vreme = rset.getDate(index++);
 				String vremee = dateToString(vreme);
 				
-				Integer obrisan = rset.getInt(index++);
+				boolean obrisan = rset.getBoolean(index++);
 
 				Integer idFilma = rset.getInt(index++);
 				String nazivFilmaa = rset.getString(index++);
@@ -97,7 +97,7 @@ public class ProjekcijaDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			String query = "UPDATE projekcija SET obrisan = 1 WHERE id = ?";
+			String query = "UPDATE projekcija SET obrisan = true WHERE id = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);
@@ -156,7 +156,7 @@ public class ProjekcijaDAO {
 				String username = rset.getString(index++);
 				Korisnik korisnik = new Korisnik(username);
 				
-				Integer obrisan = rset.getInt(index++);
+				boolean obrisan = rset.getBoolean(index++);
 						
 				Projekcija projekcija = new Projekcija(id, film, tipProjekcije, sala, vreme, cenaKarte, korisnik, obrisan);
 				return projekcija;
@@ -179,8 +179,8 @@ public class ProjekcijaDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO projekcija (tipProjekcije_id, sala_id, vremePrikazivanja, cenaKarte, username, film_id)"
-					+ "VALUES (?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO projekcija (tipProjekcije_id, sala_id, vremePrikazivanja, cenaKarte, username, film_id, obrisan)"
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(query);
 
 
@@ -193,6 +193,7 @@ public class ProjekcijaDAO {
 			pstmt.setDouble(index++, projekcija.getCenaKarte());
 			pstmt.setString(index++, projekcija.getAdministrator().getUsername());
 			pstmt.setInt(index++, projekcija.getFilm().getId());
+			pstmt.setBoolean(index++, projekcija.isObrisan());
 			
 			System.out.println(pstmt);
 
@@ -231,8 +232,66 @@ public class ProjekcijaDAO {
 		return 0;
 	}
 	
+	public static ArrayList<Projekcija> orderAll(String column, String ascDesc){
+		Connection conn = ConnectionManager.getConnection();
+		ArrayList<Projekcija> projekcije = new ArrayList<Projekcija>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM projekcija ORDER BY "+column+" "+ascDesc;
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				int index = 1;
+				Integer id = rset.getInt(index++);
+				
+				Double cenaKarte = rset.getDouble(index++);
+				
+				Date vreme = rset.getDate(index++);
+				String vremee = dateToString(vreme);
+				
+				boolean obrisan = rset.getBoolean(index++);
+
+				Integer idFilma = rset.getInt(index++);
+				String nazivFilmaa = rset.getString(index++);
+				Film film = new Film(idFilma, nazivFilmaa);
+							
+				Integer idTipaProjekcije = rset.getInt(index++);
+				String nazivProjekcije = rset.getString(index++);				
+				TipProjekcije tipProjekcijee = new TipProjekcije(idTipaProjekcije, nazivProjekcije);
+				
+				Integer idSale = rset.getInt(index++);
+				String nazivSale = rset.getString(index++);
+				Sala salaa = new Sala(idSale, nazivSale);
+								
+				String username = rset.getString(index++);
+				Korisnik korisnik = new Korisnik(username);
+						
+				Projekcija projekcija = new Projekcija(id, film, tipProjekcijee, salaa, vremee, cenaKarte, korisnik, obrisan);
+				projekcije.add(projekcija);
+			}
+		} catch (Exception e) {
+			System.out.println("Greska u SQL upitu!");
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+			try {
+				rset.close();
+			} catch (SQLException ex1) {
+				ex1.printStackTrace();
+			}
+		}
+		return projekcije;
+	}
+	
 	public static String dateToStringForWrite(Date date) {
-		SimpleDateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String datum;
 		datum = formatvr.format(date);
 		return datum;
@@ -241,7 +300,7 @@ public class ProjekcijaDAO {
 	public static Date stringToDateForWrite(String datum) {
 
 		try {
-			DateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 			return (Date) formatvr.parse(datum);
 
@@ -252,7 +311,7 @@ public class ProjekcijaDAO {
 	}
 	
 	public static String dateToString(Date date) {
-		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
+		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		String datum;
 		datum = formatvr.format(date);
 		return datum;
@@ -261,7 +320,7 @@ public class ProjekcijaDAO {
 	public static Date stringToDate(String datum) {
 
 		try {
-			DateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
+			DateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
 			return (Date) formatvr.parse(datum);
 

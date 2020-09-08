@@ -98,10 +98,8 @@ public class FilmServlet extends HttpServlet {
 				
 				String opis = request.getParameter("opis");
 				opis = (!"".equals(opis)? opis: "<prazan opis>");
-				
-				int obrisan = 0;
 
-				Film film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, obrisan);
+				Film film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, false);
 				FilmDAO.dodajFilm(film);
 				break;
 			}
@@ -145,6 +143,7 @@ public class FilmServlet extends HttpServlet {
 				film.setZemljaPorekla(zemljaPorekla);
 				film.setGodinaProizvodnje(godinaProizvodnje);
 				film.setOpis(opis);
+				film.setObrisan(false);
 				FilmDAO.izmeniFilm(film);
 
 				break;

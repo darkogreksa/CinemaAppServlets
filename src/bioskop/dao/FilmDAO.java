@@ -24,7 +24,7 @@ public class FilmDAO {
 			String query = "SELECT * FROM film WHERE "
 					+ "naziv LIKE ? AND trajanje >= ? AND trajanje <= ? AND "
 					+ "zanrovi LIKE ? AND godinaProizvodnje >= ? AND godinaProizvodnje <= ? AND "
-					+ "distributer LIKE ? AND zemljaPorekla LIKE ? AND obrisan=0";
+					+ "distributer LIKE ? AND zemljaPorekla LIKE ? AND obrisan=false";
 			
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
@@ -52,7 +52,7 @@ public class FilmDAO {
 				String zemljaPoreklaFilma = rset.getString(index++);
 				Integer godinaProizvodnjeFilma = rset.getInt(index++);
 				String opisFilma = rset.getString(index++);
-				Integer obrisan = rset.getInt(index++);
+				boolean obrisan = rset.getBoolean(index++);
 				
 				Film f = new Film(id, nazivFilma, reziserFilma, glumciFilma, zanroviFilma, trajanjeFilma, distributerFilma, zemljaPoreklaFilma, godinaProizvodnjeFilma, opisFilma, obrisan);
 				filmovi.add(f);
@@ -115,7 +115,7 @@ public class FilmDAO {
 				String zemljaPorekla = rset.getString(index++);
 				int godinaProizvodnje = rset.getInt(index++);
 				String opis = rset.getString(index++);
-				Integer obrisan = rset.getInt(index++);
+				boolean obrisan = rset.getBoolean(index++);
 				
 				return new Film(id,naziv,reziser,glumci,zanrovi,trajanje,distributer,zemljaPorekla,godinaProizvodnje,opis,obrisan);
 			}
@@ -133,8 +133,8 @@ public class FilmDAO {
 		
 		PreparedStatement pstmt = null;
 		try {
-			String query = "INSERT INTO film (naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis)"
-					+ "VALUES (?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO film (naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, obrisan)"
+					+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
 			pstmt.setString(index++, film.getNaziv());
@@ -146,6 +146,7 @@ public class FilmDAO {
 			pstmt.setString(index++, film.getZemljaPorekla());
 			pstmt.setInt(index++, film.getGodinaProizvodnje());
 			pstmt.setString(index++, film.getOpis());
+			pstmt.setBoolean(index++, film.isObrisan());
 			
 			return pstmt.executeUpdate() == 1;
 		
@@ -161,7 +162,7 @@ public class FilmDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String query = "UPDATE film SET naziv = ?, reziser = ?, glumci = ?, zanrovi = ?, trajanje = ?, distributer = ?, zemljaPorekla = ?, godinaProizvodnje = ?, opis = ? WHERE id = ?";
+			String query = "UPDATE film SET naziv = ?, reziser = ?, glumci = ?, zanrovi = ?, trajanje = ?, distributer = ?, zemljaPorekla = ?, godinaProizvodnje = ?, opis = ?, obrisan = ? WHERE id = ?";
 			
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
@@ -175,6 +176,7 @@ public class FilmDAO {
 			pstmt.setString(index++, film.getZemljaPorekla());
 			pstmt.setInt(index++, film.getGodinaProizvodnje());
 			pstmt.setString(index++, film.getOpis());
+			pstmt.setBoolean(index++, film.isObrisan());
 			
 			return pstmt.executeUpdate() == 1;
 		} finally {
@@ -188,7 +190,7 @@ public class FilmDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			String query = "UPDATE film SET obrisan=1 WHERE id = ?";
+			String query = "UPDATE film SET obrisan=true WHERE id = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);

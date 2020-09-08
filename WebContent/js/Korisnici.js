@@ -35,7 +35,7 @@ $(document).ready(function() {
 				'roleFilter': roleFilter
 		};
 		
-		$.get('KorisniciServlet', function(data) {
+		$.get('KorisniciServlet', params, function(data) {
 			console.log(data);
 			
 			if (data.status == 'unauthenticated') {

@@ -2,6 +2,7 @@ package bioskop.servlets;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,8 +74,22 @@ public class ProjekcijeServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String status = request.getParameter("status");
+		String column=request.getParameter("column");
+		String ascDesc=request.getParameter("ascDesc");
+		ArrayList<Projekcija> projekcije = null;
+		
+		try {
+			if(status.equals("order")) {
+				System.out.println(ascDesc);
+				projekcije = ProjekcijaDAO.orderAll(column, ascDesc);
+			
+				Map<String, Object> data = new LinkedHashMap<>();
+				data.put("sorted", projekcije);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

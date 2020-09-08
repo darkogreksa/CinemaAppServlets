@@ -157,4 +157,34 @@
     <servlet-name>KartaServlet</servlet-name>
     <url-pattern>/KartaServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GuestServlet</display-name>
+    <servlet-name>GuestServlet</servlet-name>
+    <servlet-class>bioskop.servlets.GuestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GuestServlet</servlet-name>
+    <url-pattern>/GuestServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GuestFilmoviServlet</display-name>
+    <servlet-name>GuestFilmoviServlet</servlet-name>
+    <servlet-class>bioskop.servlets.GuestFilmoviServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GuestFilmoviServlet</servlet-name>
+    <url-pattern>/GuestFilmoviServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GuestProjekcijeServlet</display-name>
+    <servlet-name>GuestProjekcijeServlet</servlet-name>
+    <servlet-class>bioskop.servlets.GuestProjekcijeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GuestProjekcijeServlet</servlet-name>
+    <url-pattern>/GuestProjekcijeServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -22,7 +22,7 @@ distributer VARCHAR (30) NOT NULL,
 zemljaPorekla VARCHAR(20) NOT NULL,
 godinaProizvodnje INT NOT NULL,
 opis TEXT NOT NULL,
-obrisan BIT NOT NULL
+obrisan BOOLEAN NOT NULL
 );
 
 INSERT INTO film(naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, obrisan) VALUES ('The Invisible Guest', 'Oriol Paulo', 'Mario Casas, 	Ana Wagener, José Coronado', 'Mystery, Thriller', 106, ' Warner Bros. Pictures', 'Spain', 2016, 'Spanish businessman Adrián Doria is out on bail after being arrested for the murder of his lover, Laura Vidal. His lawyer, Félix Leiva, hires prestigious defense attorney Virginia Goodman who visits him early one morning with the news that the prosecutor has found a witness who will be testifying in front of a judge soon, so he must tell the whole story quickly.', 0);
@@ -95,7 +95,7 @@ CREATE TABLE projekcija(
     cenaKarte DOUBLE NOT NULL,
     username VARCHAR(30) NOT NULL,
     film_id INTEGER NOT NULL,
-    obrisan BIT NOT NULL,
+    obrisan BOOLEAN NOT NULL,
     FOREIGN KEY(tipProjekcije_id) REFERENCES tipProjekcije(id) ON DELETE CASCADE,
     FOREIGN KEY(sala_id) REFERENCES sala(id) ON DELETE CASCADE,
     FOREIGN KEY(username) REFERENCES korisnik(username) ON DELETE CASCADE,

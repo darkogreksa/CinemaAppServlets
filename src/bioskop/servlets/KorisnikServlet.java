@@ -39,6 +39,8 @@ public class KorisnikServlet extends HttpServlet {
 			data.put("korisnik", korisnik);
 
 			request.setAttribute("loggedInUserRole", loggedInUser.getRole());
+			request.setAttribute("loggedInUserName", loggedInUser.getUsername());
+			request.setAttribute("loggedInRegisterDate", loggedInUser.getDatumRegistracije());
 			request.setAttribute("data", data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);	
 		} catch (Exception e) {

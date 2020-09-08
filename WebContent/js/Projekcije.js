@@ -13,6 +13,10 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	var desc=$('#desc');
+	var asc=$('#asc');
+	var check = $('#check');
+	
 	var filmFilterInput = $('#filmFilterInput');
 	var tipProjekcijeFilterInput = $('#tipProjekcijeFilterInput');
 	var salaFilterInput = $('#salaFilterInput');
@@ -99,6 +103,33 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	$('#order').on('click',function(event){
+		var column=$('#orderProjekcije').val();
+		var ascDesc=asc.val();
+		if(desc.is(':checked')){
+			var ascDesc=desc.val();
+		}
+		$.post('ProjekcijeServlet',{'status':"projekcijeOrder",'ascDesc':ascDesc,'column':column},function(data){
+//			projekcijeTable.empty();
+			var filteredProjekcije = data.filteredProjekcije;
+				for (it in filteredProjekcije) {
+					projekcijeTable.append(
+							'<tr>' +
+								'<td><a href="Film.html?id=' + filteredProjekcije[it].id + '">' + filteredProjekcije[it].film.naziv +  '</a></td>' +
+								'<td>' + filteredProjekcije[it].tipProjekcije.naziv + '</td>' +
+								'<td>' + filteredProjekcije[it].sala.naziv + '</td>' +
+								'<td>' + filteredProjekcije[it].vremePrikazivanja + '</td>' +
+								'<td>' + filteredProjekcije[it].cenaKarte + '</td>' +
+							'</tr>'
+					)
+				}
+		});
+		console.log(column);
+		console.log(ascDesc)
+		event.preventDefault();
+		return false;
+	});
 	
 	// na svaki od ovih događaja se osvežava lista proizvoda
 	filmFilterInput.on('keyup', function(event) {

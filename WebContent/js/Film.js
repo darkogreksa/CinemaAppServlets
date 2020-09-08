@@ -51,15 +51,15 @@ $(document).ready(function() {
 
 				
 				$('#updateSubmit').on('click', function(event) {
-					var naziv = nameInput.val();
-					var reziser = priceInput.val();
-					var glumci = priceInput.val();
-					var zanrovi = priceInput.val();
-					var trajanje = priceInput.val();
-					var distributer = priceInput.val();
-					var zemljaPorekla = priceInput.val();
-					var godinaProizvodnje = priceInput.val();
-					var opis = priceInput.val();
+					var naziv = nazivInput.val();
+					var reziser = reziserInput.val();
+					var glumci = glumciInput.val();
+					var zanrovi = zanroviInput.val();
+					var trajanje = trajanjeInput.val();
+					var distributer = distributerInput.val();
+					var zemljaPorekla = zemljaPoreklaInput.val();
+					var godinaProizvodnje = godinaProizvodnjeInput.val();
+					var opis = opisInput.val();
 					console.log('naziv: ' + naziv);
 					console.log('reziser: ' + reziser);
 					console.log('glumci: ' + glumci);

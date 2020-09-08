@@ -1,7 +1,5 @@
 package model;
 
-import java.sql.Timestamp;
-import java.util.Date;
 
 public class Projekcija {
 	
@@ -12,10 +10,10 @@ public class Projekcija {
 	private String vremePrikazivanja;
 	private double cenaKarte;
 	private Korisnik administrator;
-	private int obrisan;
+	private boolean obrisan;
 	
 	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, String vremePrikazivanja,
-			double cenaKarte, Korisnik administrator, int obrisan) {
+			double cenaKarte, Korisnik administrator, boolean obrisan) {
 		super();
 		this.id = id;
 		this.film = film;
@@ -101,11 +99,11 @@ public class Projekcija {
 		this.administrator = administrator;
 	}
 
-	public int getObrisan() {
+	public boolean isObrisan() {
 		return obrisan;
 	}
 
-	public void setObrisan(int obrisan) {
+	public void setObrisan(boolean obrisan) {
 		this.obrisan = obrisan;
 	}
 
