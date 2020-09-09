@@ -70,7 +70,7 @@ public class FilmServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		switch (action) {
 			case "add": {
-				int id = FilmDAO.getFilmId();
+//				int id = FilmDAO.getFilmId();
 				
 				String naziv = request.getParameter("naziv");
 				naziv = (!"".equals(naziv)? naziv: "<prazan naziv>");
@@ -99,7 +99,7 @@ public class FilmServlet extends HttpServlet {
 				String opis = request.getParameter("opis");
 				opis = (!"".equals(opis)? opis: "<prazan opis>");
 
-				Film film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, false);
+				Film film = new Film(0, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, false);
 				FilmDAO.dodajFilm(film);
 				break;
 			}
@@ -143,7 +143,7 @@ public class FilmServlet extends HttpServlet {
 				film.setZemljaPorekla(zemljaPorekla);
 				film.setGodinaProizvodnje(godinaProizvodnje);
 				film.setOpis(opis);
-				film.setObrisan(false);
+//				film.setObrisan(false);
 				FilmDAO.izmeniFilm(film);
 
 				break;
