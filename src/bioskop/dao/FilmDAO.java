@@ -162,11 +162,11 @@ public class FilmDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String query = "UPDATE film SET naziv = ?, reziser = ?, glumci = ?, zanrovi = ?, trajanje = ?, distributer = ?, zemljaPorekla = ?, godinaProizvodnje = ?, opis = ? WHERE id = ?";
+			String query = "UPDATE film SET naziv = ?, reziser = ?, glumci = ?, zanrovi = ?, trajanje = ?, distributer = ?, zemljaPorekla = ?, godinaProizvodnje = ?, opis = ? "
+					+ "WHERE id = ?";
 			
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
-			pstmt.setInt(index++, film.getId());
 			pstmt.setString(index++, film.getNaziv());
 			pstmt.setString(index++, film.getReziser());
 			pstmt.setString(index++, film.getGlumci());
@@ -177,6 +177,8 @@ public class FilmDAO {
 			pstmt.setInt(index++, film.getGodinaProizvodnje());
 			pstmt.setString(index++, film.getOpis());
 //			pstmt.setBoolean(index++, film.isObrisan());
+			
+			pstmt.setInt(index++, film.getId());
 			
 			return pstmt.executeUpdate() == 1;
 		} finally {

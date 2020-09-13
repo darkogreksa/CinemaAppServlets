@@ -71,8 +71,6 @@ public class ProjekcijaServlet extends HttpServlet {
 			String action = request.getParameter("action");
 			switch (action) {
 				case "add": {
-//					int id = ProjekcijaDAO.getProjekcijaId();
-//					
 //					String nazivFilma = request.getParameter("nazivFilma");
 //					nazivFilma = (!"".equals(nazivFilma)? nazivFilma: "<prazan naziv filma>");
 //					
@@ -90,8 +88,7 @@ public class ProjekcijaServlet extends HttpServlet {
 //					String korisnik = request.getParameter("korisnik");
 //					korisnik = (!"".equals(korisnik)? korisnik: "<prazan korisnik>");
 //
-//					Film film = new Film(id, naziv, reziser, glumci, zanrovi, trajanje, distributer, zemljaPorekla, godinaProizvodnje, opis, obrisan);
-//					FilmDAO.dodajFilm(film);
+//					
 //					break;
 				}
 				case "delete": {
