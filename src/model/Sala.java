@@ -13,6 +13,13 @@ public class Sala {
 	
 	
 
+	public Sala(int id) {
+		super();
+		this.id = id;
+	}
+
+
+
 	public Sala(String naziv) {
 		super();
 		this.naziv = naziv;

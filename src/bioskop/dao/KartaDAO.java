@@ -255,7 +255,7 @@ public class KartaDAO {
 	}
 	
 	public static String dateToString(Date date) {
-		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy");
+		SimpleDateFormat formatvr = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		String datum;
 		datum = formatvr.format(date);
 		return datum;
@@ -264,7 +264,7 @@ public class KartaDAO {
 	public static Date stringToDateForWrite(String datum) {
 
 		try {
-			DateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat formatvr = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 			return (Date) formatvr.parse(datum);
 

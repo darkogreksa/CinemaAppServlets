@@ -30,6 +30,11 @@ public class Film {
 		this.obrisan = obrisan;
 	}
 
+	public Film(int id) {
+		super();
+		this.id = id;
+	}
+
 	public Film(int id, String naziv, String reziser, String glumci, String zanrovi, int trajanje, String distributer,
 			String zemljaPorekla, int godinaProizvodnje, String opis) {
 		super();

@@ -92,8 +92,7 @@ $(document).ready(function() {
 			if (data.status == 'success') {
 				adminParagraph.empty();
 				if (data.loggedInUserRole == 'ADMIN') {
-					$('#adminParagraph').append('<a href="Izvestaj.html" id="izvestajLink">Izvestaj</a>\n' +
-					 		'<a href="Korisnici.html" id="korisniciLink">Upravljanje korisnicima</a>\n' +
+					$('#adminParagraph').append('<a href="Korisnici.html" id="korisniciLink">Upravljanje korisnicima</a>\n' +
 					 		'<a href="DodajProjekciju.html" id="dodajProjekcijuLink">Dodaj projekciju</a>');
 				}
 			}
@@ -136,6 +135,10 @@ $(document).ready(function() {
 
 		event.preventDefault();
 		return false;
+	});
+	
+	$('#sortSubmit').on('click', function(event) {
+		data.sort();
 	});
 	
 	getProjekcije();

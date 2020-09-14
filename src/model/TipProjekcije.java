@@ -13,6 +13,13 @@ public class TipProjekcije {
 	
 	
 	
+	public TipProjekcije(int id) {
+		super();
+		this.id = id;
+	}
+
+
+
 	public TipProjekcije(String naziv) {
 		super();
 		this.naziv = naziv;

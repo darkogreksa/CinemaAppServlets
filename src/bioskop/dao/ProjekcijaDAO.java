@@ -18,8 +18,10 @@ import model.Sala;
 import model.TipProjekcije;
 
 public class ProjekcijaDAO {
-	public static List<Projekcija> getAll(String filmFilter, String tipProjekcijeFilter, String salaFilter, double cenaOdFilter, double cenaDoFilter) throws ParseException {
+	public static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+	public static List<Projekcija> getAll(String filmFilter, String tipProjekcijeFilter, String salaFilter, double cenaOdFilter, double cenaDoFilter) throws ParseException {
+		
 		Connection conn = ConnectionManager.getConnection();
 
 		PreparedStatement pstmt = null;
@@ -35,7 +37,7 @@ public class ProjekcijaDAO {
 					"JOIN sala ON sala.id = projekcija.sala_id " + 
 					"JOIN korisnik ON korisnik.username = projekcija.username " + 
 					"WHERE projekcija.cenaKarte >= ? AND projekcija.cenaKarte <= ? AND film.naziv LIKE ? AND " + 
-					"tipProjekcije.naziv LIKE ? AND sala.naziv LIKE ? AND projekcija.obrisan = false";
+					"tipProjekcije.naziv LIKE ? AND sala.naziv LIKE ? AND projekcija.obrisan = 0";
 
 			pstmt = conn.prepareStatement(query);
 			int index = 1;
@@ -97,7 +99,7 @@ public class ProjekcijaDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			String query = "UPDATE projekcija SET obrisan = true WHERE id = ?";
+			String query = "UPDATE projekcija SET obrisan = 1 WHERE id = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);

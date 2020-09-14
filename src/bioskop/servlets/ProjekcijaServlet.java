@@ -1,6 +1,7 @@
 package bioskop.servlets;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,6 +17,8 @@ import bioskop.dao.ProjekcijaDAO;
 import model.Film;
 import model.Korisnik;
 import model.Projekcija;
+import model.Sala;
+import model.TipProjekcije;
 import model.Korisnik.Role;
 
 @SuppressWarnings("serial")
@@ -71,23 +74,26 @@ public class ProjekcijaServlet extends HttpServlet {
 			String action = request.getParameter("action");
 			switch (action) {
 				case "add": {
-//					String nazivFilma = request.getParameter("nazivFilma");
-//					nazivFilma = (!"".equals(nazivFilma)? nazivFilma: "<prazan naziv filma>");
-//					
-//					String tipProjekcije = request.getParameter("tipProjekcije");
-//					tipProjekcije = (!"".equals(tipProjekcije)? tipProjekcije: "<prazan tip projekcije>");
+//					int sala = Integer.parseInt(request.getParameter("sala"));
+//					Sala salaa = new Sala(sala);
 //
-//					String sala = request.getParameter("sala");
-//					sala = (!"".equals(sala)? sala: "<prazno polje sala>");
+//					String dateString = request.getParameter("date");
+//					String timeString = request.getParameter("time");
+//					String datetimeString = dateString + " " + timeString;
+//					System.out.println(datetimeString);
+//					Timestamp datetime = new Timestamp(ProjekcijaDAO.DATETIME_FORMAT.parse(datetimeString).getTime());
 //
-//					//FALI DATUM
-//					
-//					Double cena = Double.parseDouble(request.getParameter("trajanje"));
-//					cena = (cena > 0? cena: 999999999.0);
-//					
-//					String korisnik = request.getParameter("korisnik");
-//					korisnik = (!"".equals(korisnik)? korisnik: "<prazan korisnik>");
+//					String cenaKarte = request.getParameter("cenaKarte");
+//					double cena = Double.parseDouble(cenaKarte);
 //
+//					int film = Integer.parseInt(request.getParameter("film"));
+//					Film f = new Film(film);
+//
+//					int tip = Integer.parseInt(request.getParameter("tipProjekcije"));
+//					TipProjekcije tipProjekcije = new TipProjekcije(tip);
+//
+//					Projekcija p = new Projekcija(f, tipProjekcije, salaa, datetime, cena, loggedInUser);
+//					ProjekcijaDAO.add(p);
 //					
 //					break;
 				}

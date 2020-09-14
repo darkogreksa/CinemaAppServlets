@@ -22,7 +22,7 @@ public class FilmsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String loggedInUserName = (String) request.getSession().getAttribute("loggedInUserName");
 		if (loggedInUserName == null) {
-			response.sendRedirect("./Login.html");
+//			response.sendRedirect("./Login.html");
 			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
 			return;
 		}

@@ -25,6 +25,17 @@ public class Projekcija {
 		this.obrisan = obrisan;
 	}
 	
+	public Projekcija(Film film, TipProjekcije tipProjekcije, Sala sala, String vremePrikazivanja, double cenaKarte,
+			Korisnik administrator) {
+		super();
+		this.film = film;
+		this.tipProjekcije = tipProjekcije;
+		this.sala = sala;
+		this.vremePrikazivanja = vremePrikazivanja;
+		this.cenaKarte = cenaKarte;
+		this.administrator = administrator;
+	}
+
 	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, String vremePrikazivanja) {
 		super();
 		this.id = id;

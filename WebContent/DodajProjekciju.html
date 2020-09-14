@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Dodavanje projekcije</title>
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/DodajProjekciju.js"></script>
+</head>
+<body>
+	<h3>Dodavanje projekcije:</h3>
+	<form>
+		<table>
+			<tr><td align="right">Sala: <select name="salaInput">
+								 <option value="">Select</option>		
+								  <option value="2D">SALA1</option>
+								  <option value="3D">SALA2</option>
+								  <option value="4D">SALA3</option>
+								</select></td></tr>
+			<tr><td align="center">Tip projekcije: <select name="tipProjekcijeInput">
+								 <option value="">Select</option>		
+								  <option value="2D">2D</option>
+								  <option value="3D">3D</option>
+								  <option value="4D">4D</option>
+								</select></td></tr>
+			<tr><td align="right">Vreme: </td><td><input type="date" id="dateInput"/><input type="time" name="timeInput"/></td></tr>
+			<tr><td align="right">Cena: </td><td><input type="text" id="cenaInput"/></td></tr>
+			<tr><td align="right">Film: </td><td><input type="text" id="filmInput"/></td></tr>
+			<tr><td/><td><input type="submit" value="Dodaj" id="projekcijaSubmit"></td></tr>
+		</table>
+	</form>
+	<p><a href="Projekcije.html">Povratak</a></p>
+	<p><a href="" id="logoutLink">Odjava</a></p>
+</body>
+</html>
